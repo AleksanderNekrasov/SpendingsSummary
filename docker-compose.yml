@@ -1,0 +1,46 @@
+version: '3.4'
+
+services:
+  spendingssummary.workerservice:
+    image: ${DOCKER_REGISTRY-}spendingssummaryworkerservice
+    build:
+      context: .
+      dockerfile: SpendingSummary.FileProcessor/SpendingSummary.FileProcessor.WorkerService/Dockerfile
+    volumes:
+      - "imported-files:/files/"
+    depends_on:
+      - spendingssummary.db
+      - spendingssummary.rabbitmq
+    networks:
+        - queue-net
+  spendingssummary.db:
+    image: mcr.microsoft.com/mssql/server
+    container_name: 'spendingssummary.db'
+    environment:
+      SA_PASSWORD: "2%t}t!ncFEkX2cUb"
+      ACCEPT_EULA: "Y"
+    ports:  
+      - "1433:1433"
+    volumes:
+      - "db-data:/var/opt/mssql/" 
+    networks:
+        - queue-net
+  spendingssummary.rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'spendingssummary.rabbitmq'
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - rabbit-data:/var/lib/rabbitmq/
+        - rabbit-logs:/var/log/rabbitmq/
+    networks:
+        - queue-net
+volumes:
+  db-data:
+  rabbit-data:
+  rabbit-logs:
+  imported-files:
+networks:
+  queue-net:
+    driver: bridge
