@@ -2,7 +2,8 @@ version: '3.4'
 
 services:
   spendingssummary.workerservice:
-    image: ${DOCKER_REGISTRY-}spendingssummaryworkerservice
+    image: spendingssummaryworkerservice
+    container_name: 'spendingssummary.fileprocessor'
     build:
       context: .
       dockerfile: SpendingSummary.FileProcessor/SpendingSummary.FileProcessor.WorkerService/Dockerfile
@@ -10,7 +11,7 @@ services:
       - "imported-files:/files/"
     depends_on:
       - spendingssummary.db
-      - spendingssummary.rabbitmq
+      - spendingssummary.queue
     networks:
         - queue-net
   spendingssummary.db:
@@ -25,15 +26,19 @@ services:
       - "db-data:/var/opt/mssql/" 
     networks:
         - queue-net
-  spendingssummary.rabbitmq:
-    image: rabbitmq:3-management-alpine
-    container_name: 'spendingssummary.rabbitmq'
+  spendingssummary.queue:
+    image: spendingssummaryqueue
+    container_name: 'spendingssummary.queue'
+    build:
+      context: .
+      dockerfile: SpendingSummary.Queue/Dockerfile
     ports:
         - 5672:5672
         - 15672:15672
     volumes:
         - rabbit-data:/var/lib/rabbitmq/
         - rabbit-logs:/var/log/rabbitmq/
+        - rabbit-conf:/etc/rabbitmq/
     networks:
         - queue-net
 volumes:
@@ -41,6 +46,7 @@ volumes:
   rabbit-data:
   rabbit-logs:
   imported-files:
+  rabbit-conf:
 networks:
   queue-net:
     driver: bridge

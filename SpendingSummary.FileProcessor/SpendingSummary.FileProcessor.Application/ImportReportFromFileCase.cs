@@ -2,10 +2,9 @@
 using SpendingsSummary.Interfaces;
 using SpendingsSummary.Model;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using static SpendingsSummary.ReportReader.FilesInFolder;
-
 namespace SpendingsSummary.Application.Interfaces
 {
     public class ImportReportFromFileCase : IImportReportFromFile
@@ -23,7 +22,7 @@ namespace SpendingsSummary.Application.Interfaces
 
         public async void ImportFileReportToDb()  
         {
-            var files = GetFileNames(_folderPath);
+            var files = Directory.GetFiles(_folderPath);
             var tasks = files.Select(GetTransactions);
             var transactions = (await Task.WhenAll(tasks))
                 .SelectMany(x => x)
@@ -32,7 +31,7 @@ namespace SpendingsSummary.Application.Interfaces
 
         private async Task<IEnumerable<TransactionModel>> GetTransactions(string file)
         {
-            var lines = await _reportSourceRepo.GetLines(reportInFile);
+            var lines = await _reportSourceRepo.GetLines(file);
             return await _parser.ParseTransactionFromString(lines);
         }
     }

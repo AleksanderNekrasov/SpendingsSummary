@@ -19,7 +19,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpendingSummary.FileProcess
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{E193EE91-A05E-42F1-AC14-60A1FD725353}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SpendingSummary.FileProcessor.FileProcessor", "SpendingSummary.FileProcessor.FileProcessor", "{41ED64E7-BA7D-4592-A28D-57CB50E2C243}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SpendingSummary.FileProcessor", "SpendingSummary.FileProcessor", "{41ED64E7-BA7D-4592-A28D-57CB50E2C243}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SpendingSummary.DataStore", "SpendingSummary.DataStore", "{DC1625E0-DF57-4713-8D3B-3F2B88F704E9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpendingSummary.DataStore.WorkerService", "SpendingSummary.DataStore.WorkerService\SpendingSummary.DataStore.WorkerService.csproj", "{7D1375CA-8B09-4EF4-99AA-5E2593B1372C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SpendingSummary.Queue", "SpendingSummary.Queue", "{C9F5446B-4891-4254-AE07-58F611F089FC}"
+	ProjectSection(SolutionItems) = preProject
+		SpendingSummary.Queue\definitions.json = SpendingSummary.Queue\definitions.json
+		SpendingSummary.Queue\Dockerfile = SpendingSummary.Queue\Dockerfile
+		SpendingSummary.Queue\rabbitmq.conf = SpendingSummary.Queue\rabbitmq.conf
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +70,10 @@ Global
 		{E193EE91-A05E-42F1-AC14-60A1FD725353}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E193EE91-A05E-42F1-AC14-60A1FD725353}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E193EE91-A05E-42F1-AC14-60A1FD725353}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D1375CA-8B09-4EF4-99AA-5E2593B1372C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D1375CA-8B09-4EF4-99AA-5E2593B1372C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D1375CA-8B09-4EF4-99AA-5E2593B1372C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D1375CA-8B09-4EF4-99AA-5E2593B1372C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,6 +86,7 @@ Global
 		{55E1943C-7E48-45A4-8C2F-C1F703CB863D} = {41ED64E7-BA7D-4592-A28D-57CB50E2C243}
 		{523E2264-73D0-45A4-BB57-E6737BF27844} = {41ED64E7-BA7D-4592-A28D-57CB50E2C243}
 		{43319FFB-7BC8-42F9-AB50-49F9AFA4DDB4} = {41ED64E7-BA7D-4592-A28D-57CB50E2C243}
+		{7D1375CA-8B09-4EF4-99AA-5E2593B1372C} = {DC1625E0-DF57-4713-8D3B-3F2B88F704E9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EA2F8E7A-41BD-479D-A4F2-733E8A1E1F0D}

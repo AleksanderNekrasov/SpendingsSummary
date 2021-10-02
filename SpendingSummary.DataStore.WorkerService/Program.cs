@@ -1,8 +1,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SpendingsSummary.WorkerService.IoC;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace SpendingsSummary.WorkerService
+namespace SpendingSummary.DataStore.WorkerService
 {
     public class Program
     {
@@ -15,10 +18,7 @@ namespace SpendingsSummary.WorkerService
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services
-                        .RegisterDataDependancy(hostContext.Configuration)
-                        .RegisterApplicationDependancy(hostContext.Configuration)
-                        .AddHostedService<ReadFromQueueService>();
+                    services.AddHostedService<Worker>();
                 });
     }
 }

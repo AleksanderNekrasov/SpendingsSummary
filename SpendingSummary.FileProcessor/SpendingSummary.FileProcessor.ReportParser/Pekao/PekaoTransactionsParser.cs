@@ -1,4 +1,5 @@
-﻿using SpendingsSummary.Model;
+﻿using SpendingsSummary.Interfaces;
+using SpendingsSummary.Model;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
