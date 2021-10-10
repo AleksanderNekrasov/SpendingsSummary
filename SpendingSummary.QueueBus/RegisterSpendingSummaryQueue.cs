@@ -6,15 +6,11 @@ namespace SpendingSummary.Queue
 {
     public static class RegisterSpendingSummaryQueue
     {
-        public static IServiceCollection AddQueueConnection(this IServiceCollection services,
-            QueueConfigurations options)
+        public static IServiceCollection AddQueueConnection(this IServiceCollection services)
         {
-            services.AddSingleton<IQueueConnection>(sp =>
-            {                
-                return new QueueConnection(options);
-            });
-
+            services.AddSingleton<IQueueConnection, QueueConnection>();
             services.AddTransient<IQueueSubscriber, QueueSubscriber>();
+            services.AddTransient<IQueuePublisher, QueuePublisher>();
             return services;
         }
     }

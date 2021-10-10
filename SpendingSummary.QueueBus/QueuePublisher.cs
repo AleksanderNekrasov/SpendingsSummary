@@ -1,14 +1,15 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using SpendingSummary.Common.Interfaces;
 using SpendingSummary.Queue.Interfaces;
 using System.Text;
 
 namespace SpendingSummary.Queue
 {
-    public class QueuePublisher : QueueMessageBus
+    public class QueuePublisher : QueueMessageBus, IQueuePublisher
     {
-        public QueuePublisher(IQueueConnection persistentConnection, IServiceScopeFactory serviceScopeFactory) 
+        public QueuePublisher(IQueueConnection persistentConnection, IServiceScopeFactory serviceScopeFactory)
             : base(persistentConnection, serviceScopeFactory)
         {
         }
@@ -23,7 +24,7 @@ namespace SpendingSummary.Queue
             var eventyType = queueEvent.GetType();
 
             using var channel = _queueConnection.CreateModel();
-            var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(queueEvent));
+            var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(queueEvent));
 
             var properties = channel.CreateBasicProperties();
             properties.DeliveryMode = 2;

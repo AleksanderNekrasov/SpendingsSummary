@@ -11,7 +11,7 @@ services:
       - "imported-files:/files/"
     depends_on:
       - spendingssummary.db
-      - spendingssummary.queue
+      - spendingssummary.rabbitmq
     networks:
         - queue-net
   spendingssummary.db:
@@ -26,12 +26,12 @@ services:
       - "db-data:/var/opt/mssql/" 
     networks:
         - queue-net
-  spendingssummary.queue:
+  spendingssummary.rabbitmq:
     image: spendingssummaryqueue
-    container_name: 'spendingssummary.queue'
+    container_name: 'spendingssummary.rabbitmq'
     build:
       context: .
-      dockerfile: SpendingSummary.Queue/Dockerfile
+      dockerfile: SpendingSummary.Rabbitmq/Dockerfile
     ports:
         - 5672:5672
         - 15672:15672

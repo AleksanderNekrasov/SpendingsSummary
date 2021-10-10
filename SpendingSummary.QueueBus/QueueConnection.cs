@@ -1,4 +1,5 @@
-﻿using RabbitMQ.Client;
+﻿using Microsoft.Extensions.Options;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using SpendingSummary.Queue.Interfaces;
 using System;
@@ -12,28 +13,24 @@ namespace SpendingSummary.Queue
         private bool _disposed;
         private ConnectionFactory _connectionFactory;
 
-        public QueueConnection(QueueConfigurations options)
+        public QueueConnection(IOptions<QueueConfigurations> options)
         {
             _connectionFactory = new ConnectionFactory
             {
-                HostName = options.Host,
-                DispatchConsumersAsync = options.DispatchConsumersAsync
+                HostName = options.Value?.Host,
             };
 
-            if (!string.IsNullOrEmpty(options.VirtualHost))
+            if (!string.IsNullOrEmpty(options.Value?.Username))
             {
-                _connectionFactory.VirtualHost = options.VirtualHost;
+                _connectionFactory.UserName = options.Value.Username;
             }
 
-            if (!string.IsNullOrEmpty(options.Username))
+            if (!string.IsNullOrEmpty(options.Value?.Password))
             {
-                _connectionFactory.UserName = options.Username;
+                _connectionFactory.Password = options.Value.Password;
             }
 
-            if (!string.IsNullOrEmpty(options.Password))
-            {
-                _connectionFactory.Password = options.Password;
-            }
+            _connection = _connectionFactory.CreateConnection();
         }
 
         public IModel CreateModel()

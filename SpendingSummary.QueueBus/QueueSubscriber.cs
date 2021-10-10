@@ -1,10 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
+
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using SpendingSummary.Common.Interfaces;
 using SpendingSummary.Queue.Interfaces;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace SpendingSummary.Queue
@@ -49,6 +50,6 @@ namespace SpendingSummary.Queue
             await handler.HandleAsync(queueEvent);
         }
 
-        private T DeserializeObject<T>(string json) => (T)JsonConvert.DeserializeObject(json, typeof(T));
+        private T DeserializeObject<T>(string json) => JsonSerializer.Deserialize<T>(json);
     }
 }

@@ -9,7 +9,7 @@ namespace SpendingsSummary.WorkerService.IoC
 {
     public static class RegisterData
     {
-        public static IServiceCollection RegisterDataDependancy(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection RegisterDataDependancy(this IServiceCollection services)
         {
             return services
                 .AddTransient<IReportLinesRepository, ReportLinesRepository>()
