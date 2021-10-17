@@ -1,9 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using SpendingSummary.Common.Interfaces;
+using SpendingSummary.Common.Models;
+using SpendingSummary.Queue;
 
 namespace SpendingSummary.DataStore.WorkerService
 {
@@ -18,7 +17,10 @@ namespace SpendingSummary.DataStore.WorkerService
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
+                    services.Configure<QueueConfigurations>(hostContext.Configuration.GetSection("RaddisQueueSettings"))
+                    .AddQueueConnection();
                     services.AddHostedService<Worker>();
+                    services.AddTransient<IQueueEventHandler<DataParsedEvent>, DataParsedEventHandler>();
                 });
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SpendingSummary.Queue
 {
-    public static class BrockerNames
+    public static class EventDefinitions
     {
         public static string DataParsedQueue = "data_parsed_queue";
         public static string DataParcedExchange = "data_parsed_exchange";

@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 using SpendingSummary.Common.Interfaces;
 using SpendingSummary.Queue.Interfaces;
 using System.Text;
+using RabbitMQ.Client;
 
 namespace SpendingSummary.Queue
 {
@@ -29,7 +30,7 @@ namespace SpendingSummary.Queue
             var properties = channel.CreateBasicProperties();
             properties.DeliveryMode = 2;
 
-            channel.BasicPublish(BrockerNames.ByEventType[eventyType].exchange, eventyType.Name, true, properties, body);
+            channel.BasicPublish(EventDefinitions.ByEventType[eventyType].exchange, eventyType.Name, true, properties, body);
         }
     }
 }

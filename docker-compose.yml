@@ -1,14 +1,25 @@
 version: '3.4'
 
 services:
-  spendingssummary.workerservice:
-    image: spendingssummaryworkerservice
+  spendingssummary.fileprocessor:
+    image: spendingssummaryfileprocessor
     container_name: 'spendingssummary.fileprocessor'
     build:
       context: .
       dockerfile: SpendingSummary.FileProcessor/SpendingSummary.FileProcessor.WorkerService/Dockerfile
     volumes:
       - "imported-files:/files/"
+    depends_on:
+      - spendingssummary.db
+      - spendingssummary.rabbitmq
+    networks:
+        - queue-net
+  spendingssummary.dataaccess:
+    image: spendingssummarydataaccess
+    container_name: 'spendingssummary.dataaccess'
+    build:
+      context: .
+      dockerfile: SpendingSummary.DataStore/SpendingSummary.DataStore.WorkerService/Dockerfile    
     depends_on:
       - spendingssummary.db
       - spendingssummary.rabbitmq

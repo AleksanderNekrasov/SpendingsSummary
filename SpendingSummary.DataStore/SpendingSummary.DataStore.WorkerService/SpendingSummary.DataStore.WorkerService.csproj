@@ -10,4 +10,9 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\SpendingSummary.Common\SpendingSummary.Common.csproj" />
+    <ProjectReference Include="..\..\SpendingSummary.QueueBus\SpendingSummary.Queue.csproj" />
+  </ItemGroup>
 </Project>

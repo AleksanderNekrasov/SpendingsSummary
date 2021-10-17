@@ -1,6 +1,6 @@
 ﻿namespace SpendingSummary.Common.Interfaces
 {
-    public interface IQueuePublisher
+    public interface IQueuePublisher : IQueueMessageBus
     {
         void Publish(IQueueEvent queueEvent);
     }

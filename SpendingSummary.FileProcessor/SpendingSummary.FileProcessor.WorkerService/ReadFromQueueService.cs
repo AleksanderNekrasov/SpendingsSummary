@@ -24,13 +24,14 @@ namespace SpendingsSummary.WorkerService
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            _publisher.BindQueue<DataParsedEvent>();
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
                 _publisher.Publish(new DataParsedEvent { TransactionId = Guid.NewGuid() });
                 _importCase.ImportFileReportToDb();
 
-                await Task.Delay(1000, stoppingToken);
+                await Task.Delay(5000, stoppingToken);
             }
         }
     }
