@@ -17,7 +17,9 @@ namespace SpendingSummary.Queue
         {
             _connectionFactory = new ConnectionFactory
             {
-                HostName = options.Value?.Host,
+                HostName = options.Value.Host,
+                Port = options.Value.Port,
+                VirtualHost = "/"
             };
 
             if (!string.IsNullOrEmpty(options.Value?.Username))
