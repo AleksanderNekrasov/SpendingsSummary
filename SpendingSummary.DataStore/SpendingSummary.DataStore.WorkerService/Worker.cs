@@ -20,11 +20,11 @@ namespace SpendingSummary.DataStore.WorkerService
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _subscriber.BindQueue<DataParsedEvent>();
+            await _subscriber.BindQueueAsync<DataParsedEvent>();
             _subscriber.Subscribe<DataParsedEvent>();
         }
 
-        public async Task StopAsync(CancellationToken cancellationToken)
+        public override async Task StopAsync(CancellationToken cancellationToken)
         {
             _subscriber.Dispose();
         }

@@ -5,10 +5,12 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["SpendingSummary.DataStore.WorkerService/SpendingSummary.DataStore.WorkerService.csproj", "SpendingSummary.DataStore.WorkerService/"]
-RUN dotnet restore "SpendingSummary.DataStore.WorkerService/SpendingSummary.DataStore.WorkerService.csproj"
+COPY ["SpendingSummary.DataStore/SpendingSummary.DataStore.WorkerService/SpendingSummary.DataStore.WorkerService.csproj", "SpendingSummary.DataStore/SpendingSummary.DataStore.WorkerService/"]
+COPY ["SpendingSummary.QueueBus/SpendingSummary.Queue.csproj", "SpendingSummary.QueueBus/"]
+COPY ["SpendingSummary.Common/SpendingSummary.Common.csproj", "SpendingSummary.Common/"]
+RUN dotnet restore "SpendingSummary.DataStore/SpendingSummary.DataStore.WorkerService/SpendingSummary.DataStore.WorkerService.csproj"
 COPY . .
-WORKDIR "/src/SpendingSummary.DataStore.WorkerService"
+WORKDIR "/src/SpendingSummary.DataStore/SpendingSummary.DataStore.WorkerService"
 RUN dotnet build "SpendingSummary.DataStore.WorkerService.csproj" -c Release -o /app/build
 
 FROM build AS publish

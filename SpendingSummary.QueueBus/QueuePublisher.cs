@@ -1,30 +1,28 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using SpendingSummary.Common.Interfaces;
 using SpendingSummary.Queue.Interfaces;
 using System.Text;
-using RabbitMQ.Client;
+using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace SpendingSummary.Queue
 {
     public class QueuePublisher : QueueMessageBus, IQueuePublisher
     {
-        public QueuePublisher(IQueueConnection persistentConnection, IServiceScopeFactory serviceScopeFactory)
-            : base(persistentConnection, serviceScopeFactory)
+        private readonly ILogger<QueuePublisher> _logger;
+
+        public QueuePublisher(IQueueConnection persistentConnection, IServiceScopeFactory serviceScopeFactory, ILogger<QueuePublisher> logger)
+            : base(persistentConnection, serviceScopeFactory, logger)
         {
+            _logger = logger;
         }
 
-        public void Publish(IQueueEvent queueEvent)
+        public async Task PublishAsync(IQueueEvent queueEvent)
         {
-            if (!_queueConnection.IsOpen)
-            {
-                _queueConnection.TryConnect();
-            }
-
+            var channel = await GetOrCreateModelAsync();
             var eventyType = queueEvent.GetType();
 
-            using var channel = _queueConnection.CreateModel();
             var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(queueEvent));
 
             var properties = channel.CreateBasicProperties();

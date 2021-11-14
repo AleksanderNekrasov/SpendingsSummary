@@ -6,7 +6,7 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["SpendingSummary.FileProcessor/SpendingSummary.FileProcessor.WorkerService/SpendingSummary.FileProcessor.WorkerService.csproj", "SpendingSummary.FileProcessor/SpendingSummary.FileProcessor.WorkerService/"]
-COPY ["SpendingSummary.Queue/SpendingSummary.Queue.csproj", "SpendingSummary.Queue/"]
+COPY ["SpendingSummary.QueueBus/SpendingSummary.Queue.csproj", "SpendingSummary.QueueBus/"]
 COPY ["SpendingSummary.Common/SpendingSummary.Common.csproj", "SpendingSummary.Common/"]
 COPY ["SpendingSummary.FileProcessor/SpendingSummary.FileProcessor.ReportReader/SpendingSummary.FileProcessor.ReportReader.csproj", "SpendingSummary.FileProcessor/SpendingSummary.FileProcessor.ReportReader/"]
 COPY ["SpendingSummary.FileProcessor/SpendingSummary.FileProcessor.Interfaces/SpendingSummary.FileProcessor.Interfaces.csproj", "SpendingSummary.FileProcessor/SpendingSummary.FileProcessor.Interfaces/"]

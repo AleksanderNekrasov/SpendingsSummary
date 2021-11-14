@@ -1,7 +1,9 @@
-﻿namespace SpendingSummary.Common.Interfaces
+﻿using System.Threading.Tasks;
+
+namespace SpendingSummary.Common.Interfaces
 {
     public interface IQueueMessageBus
     {
-        void BindQueue<T>() where T : IQueueEvent;
+        Task BindQueueAsync<T>() where T : IQueueEvent;
     }
 }

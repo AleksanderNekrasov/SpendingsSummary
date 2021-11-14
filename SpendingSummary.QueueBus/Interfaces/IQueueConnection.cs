@@ -1,5 +1,6 @@
 ﻿using RabbitMQ.Client;
 using System;
+using System.Threading.Tasks;
 
 namespace SpendingSummary.Queue.Interfaces
 {
@@ -7,7 +8,7 @@ namespace SpendingSummary.Queue.Interfaces
     {
         IModel CreateModel();
 
-        bool TryConnect();
+        Task<bool> TryConnectAsync();
 
         bool IsOpen { get; }
     }

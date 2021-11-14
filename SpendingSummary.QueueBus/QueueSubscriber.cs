@@ -1,13 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using SpendingSummary.Common.Interfaces;
 using SpendingSummary.Queue.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace SpendingSummary.Queue
 {
@@ -16,8 +15,8 @@ namespace SpendingSummary.Queue
         private bool _disposed;
         private IList<string> _consumeTags;
 
-        public QueueSubscriber(IQueueConnection persistentConnection, IServiceScopeFactory serviceScopeFactory)
-            : base(persistentConnection, serviceScopeFactory)
+        public QueueSubscriber(IQueueConnection persistentConnection, IServiceScopeFactory serviceScopeFactory, ILogger<QueueSubscriber> logger)
+            : base(persistentConnection, serviceScopeFactory, logger)
         {
             _consumeTags = new List<string>();
         }

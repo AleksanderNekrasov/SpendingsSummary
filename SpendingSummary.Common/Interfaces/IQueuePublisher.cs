@@ -1,7 +1,9 @@
-﻿namespace SpendingSummary.Common.Interfaces
+﻿using System.Threading.Tasks;
+
+namespace SpendingSummary.Common.Interfaces
 {
     public interface IQueuePublisher : IQueueMessageBus
     {
-        void Publish(IQueueEvent queueEvent);
+        Task Publish(IQueueEvent queueEvent);
     }
 }

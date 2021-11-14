@@ -1,20 +1,26 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using RabbitMQ.Client.Exceptions;
 using SpendingSummary.Queue.Interfaces;
 using System;
+using Polly;
+using System.Threading.Tasks;
 
 namespace SpendingSummary.Queue
 {
     public class QueueConnection : IQueueConnection
     {
         private readonly object _lock = new object();
+        private readonly ILogger<QueueConnection> _logger;
         private IConnection _connection;
         private bool _disposed;
         private ConnectionFactory _connectionFactory;
 
-        public QueueConnection(IOptions<QueueConfigurations> options)
+        public QueueConnection(IOptions<QueueConfigurations> options, ILogger<QueueConnection> logger)
         {
+            _logger = logger;
             _connectionFactory = new ConnectionFactory
             {
                 HostName = options.Value.Host,
@@ -31,8 +37,6 @@ namespace SpendingSummary.Queue
             {
                 _connectionFactory.Password = options.Value.Password;
             }
-
-            _connection = _connectionFactory.CreateConnection();
         }
 
         public IModel CreateModel()
@@ -42,22 +46,35 @@ namespace SpendingSummary.Queue
 
         public bool IsOpen => _connection != null && _connection.IsOpen && !_disposed;
 
-        public bool TryConnect()
+        public async Task<bool> TryConnectAsync()
         {
-            lock (_lock)
-            {
-                _connection = _connectionFactory.CreateConnection();
-
-                if (!IsOpen)
+            var policy = Policy
+              .Handle<BrokerUnreachableException>()
+              .WaitAndRetryForeverAsync(
+                retryAttempt => TimeSpan.FromSeconds(1 + retryAttempt),
+                (exception, timespan) =>
                 {
-                    return false;
-                }
+                    _logger.LogInformation("Broker is not reachable");
+                });
 
-                _connection.ConnectionShutdown += OnConnectionShutdown;
-                _connection.CallbackException += OnCallbackException;
-                _connection.ConnectionBlocked += OnConnectionBlocked;
-                return true;
+            await policy.ExecuteAsync(async () => await ConnectAsync());
+
+            return true;
+        }
+
+        private async Task<bool> ConnectAsync()
+        {
+            _connection = await Task.Run(() => _connectionFactory.CreateConnection());
+
+            if (!IsOpen)
+            {
+                return false;
             }
+
+            _connection.ConnectionShutdown += OnConnectionShutdown;
+            _connection.CallbackException += OnCallbackException;
+            _connection.ConnectionBlocked += OnConnectionBlocked;
+            return true;            
         }
 
         private void OnConnectionBlocked(object sender, ConnectionBlockedEventArgs e)

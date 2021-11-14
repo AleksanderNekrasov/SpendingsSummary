@@ -24,7 +24,7 @@ namespace SpendingsSummary.WorkerService
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _publisher.BindQueue<DataParsedEvent>();
+            await _publisher.BindQueueAsync<DataParsedEvent>();
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
