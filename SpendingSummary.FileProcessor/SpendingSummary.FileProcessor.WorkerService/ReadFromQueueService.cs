@@ -28,7 +28,7 @@ namespace SpendingsSummary.WorkerService
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                _publisher.Publish(new DataParsedEvent { TransactionId = Guid.NewGuid() });
+                await _publisher.Publish(new DataParsedEvent { TransactionId = Guid.NewGuid() });
                 _importCase.ImportFileReportToDb();
 
                 await Task.Delay(5000, stoppingToken);
