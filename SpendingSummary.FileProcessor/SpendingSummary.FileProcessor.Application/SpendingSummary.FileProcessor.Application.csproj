@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\SpendingSummary.Common\SpendingSummary.Common.csproj" />
     <ProjectReference Include="..\SpendingSummary.FileProcessor.Interfaces\SpendingSummary.FileProcessor.Interfaces.csproj" />
   </ItemGroup>
 

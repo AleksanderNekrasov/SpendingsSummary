@@ -24,4 +24,5 @@ RUN dotnet publish "SpendingSummary.FileProcessor.WorkerService.csproj" -c Relea
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+COPY [".env", "."]
 ENTRYPOINT ["dotnet", "SpendingSummary.FileProcessor.WorkerService.dll"]

@@ -1,6 +1,9 @@
 ﻿using Microsoft.Extensions.Options;
 using SpendingsSummary.Interfaces;
 using SpendingsSummary.Model;
+using SpendingSummary.Common.Interfaces;
+using SpendingSummary.Common.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,21 +15,23 @@ namespace SpendingsSummary.Application.Interfaces
         private string _folderPath;
         private IReportLinesRepository _reportSourceRepo;
         private readonly ITransactionsParser _parser;
+        private readonly IQueuePublisher _publisher;
 
-        public ImportReportFromFileCase(IOptions<ImportSettings> settings, IReportLinesRepository reportSourceRepo, ITransactionsParser parser)
+        public ImportReportFromFileCase(IOptions<ImportSettings> settings, IReportLinesRepository reportSourceRepo, ITransactionsParser parser, IQueuePublisher publisher)
         {
             _folderPath = settings.Value.ReportFilesFolder;
             _reportSourceRepo = reportSourceRepo;
             _parser = parser;
+            _publisher = publisher;
         }
 
         public async void ImportFileReportToDb()  
         {
-            var files = Directory.GetFiles(_folderPath);
-            var tasks = files.Select(GetTransactions);
+            var tasks = Directory.GetFiles($"../{_folderPath}").Select(GetTransactions);
             var transactions = (await Task.WhenAll(tasks))
                 .SelectMany(x => x)
                 .ToArray();
+            await PublishTransactionAsync(transactions);
         }
 
         private async Task<IEnumerable<TransactionModel>> GetTransactions(string file)
@@ -39,6 +44,16 @@ namespace SpendingsSummary.Application.Interfaces
             // When application starts, read all unprocessed events from Redis
             // When failure happens, write an appropriate status for event in Redis
             return await _parser.ParseTransactionFromString(lines);
+        }
+
+        private async Task PublishTransactionAsync(IEnumerable<TransactionModel> transactions)
+        {
+            await _publisher.PublishAsync(
+                new DataParsedEvent 
+                { 
+                    EventId = Guid.NewGuid(),
+                    Transactions = transactions
+                });
         }
     }
 }
