@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using SpendingSummary.Common.Interfaces;
 using SpendingSummary.Common.Models;
 using SpendingSummary.Queue;
+using static SpendingSummary.Common.EnvFile;
 
 namespace SpendingSummary.DataStore.WorkerService
 {
@@ -10,6 +11,7 @@ namespace SpendingSummary.DataStore.WorkerService
     {
         public static void Main(string[] args)
         {
+            SetEnvironmentalVariablesFromEnvFile();
             CreateHostBuilder(args).Build().Run();
         }
 

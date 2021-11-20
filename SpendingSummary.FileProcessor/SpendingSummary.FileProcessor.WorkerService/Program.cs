@@ -3,10 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SpendingsSummary.Application;
 using SpendingsSummary.WorkerService.IoC;
-using SpendingSummary.Common;
 using SpendingSummary.Queue;
-using System;
-using System.Linq;
+using static SpendingSummary.Common.EnvFile;
 
 namespace SpendingsSummary.WorkerService
 {
@@ -15,8 +13,6 @@ namespace SpendingsSummary.WorkerService
         public static void Main(string[] args)
         {
             SetEnvironmentalVariablesFromEnvFile();
-            var variables = Environment.GetEnvironmentVariables();
-            
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -33,17 +29,5 @@ namespace SpendingsSummary.WorkerService
                         .AddQueueConnection()
                         .AddHostedService<ReadFromQueueService>();
                 });
-
-        private static void SetEnvironmentalVariablesFromEnvFile() 
-        {
-            string envFilePath = ".env";
-#if DEBUG
-            envFilePath = "bin/Debug/net5.0/.env";
-#endif
-            EnvFile.Read($"{Environment.CurrentDirectory}/{envFilePath}").ToList().ForEach(x =>
-            {
-                Environment.SetEnvironmentVariable(x.key, x.value);
-            });
-        }
     }
 }

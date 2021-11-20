@@ -29,10 +29,10 @@ services:
     image: mcr.microsoft.com/mssql/server
     container_name: 'spendingssummary.db'
     environment:
-      SA_PASSWORD: "2%t}t!ncFEkX2cUb"
+      SA_PASSWORD: "${DataBaseSettings__SA_PASSWORD}"
       ACCEPT_EULA: "Y"
     ports:  
-      - "1433:1433"
+      - "1433:${DataBaseSettings__Port}"
     volumes:
       - "db-data:/var/opt/mssql/" 
     networks:
@@ -44,7 +44,7 @@ services:
       context: .
       dockerfile: SpendingSummary.Rabbitmq/Dockerfile
     ports:
-        - 5672:5672
+        - 5672:${RaddisQueueSettings__Port}
         - 15672:15672
     volumes:
         - rabbit-data:/var/lib/rabbitmq/

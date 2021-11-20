@@ -2,14 +2,24 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SpendingSummary.Common
 {
     public static class EnvFile
     {
-        public static IEnumerable<(string key, string value)> Read(string filePath)
+        public static void SetEnvironmentalVariablesFromEnvFile()
+        {
+            string envFilePath = ".env";
+#if DEBUG
+            envFilePath = "bin/Debug/net5.0/.env";
+#endif
+            Read($"{Environment.CurrentDirectory}/{envFilePath}").ToList().ForEach(x =>
+            {
+                Environment.SetEnvironmentVariable(x.key, x.value);
+            });
+        }
+
+        private static IEnumerable<(string key, string value)> Read(string filePath)
         {
             if (!File.Exists(filePath))
                 return null;
