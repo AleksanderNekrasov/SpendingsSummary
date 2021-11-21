@@ -25,4 +25,5 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 COPY [".env", "."]
+COPY ["SpendingSummary.FileProcessor/SpendingSummary.FileProcessor.ReportParser.Tests/TestFiles/Report1.csv", "../Files/"]
 ENTRYPOINT ["dotnet", "SpendingSummary.FileProcessor.WorkerService.dll"]

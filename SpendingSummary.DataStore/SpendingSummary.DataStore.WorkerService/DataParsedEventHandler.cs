@@ -1,6 +1,5 @@
 ﻿using SpendingSummary.Common.Interfaces;
 using SpendingSummary.Common.Models;
-using System;
 using System.Threading.Tasks;
 
 namespace SpendingSummary.DataStore.WorkerService
