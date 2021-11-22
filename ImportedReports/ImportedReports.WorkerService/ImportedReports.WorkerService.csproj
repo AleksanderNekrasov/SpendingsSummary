@@ -19,11 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SpendingSummary.QueueBus\SpendingSummary.Queue.csproj" />
-    <ProjectReference Include="..\SpendingSummary.FileProcessor.Application\SpendingSummary.FileProcessor.Application.csproj" />
-    <ProjectReference Include="..\SpendingSummary.FileProcessor.Interfaces\SpendingSummary.FileProcessor.Interfaces.csproj" />
-    <ProjectReference Include="..\SpendingSummary.FileProcessor.Model\SpendingSummary.FileProcessor.Model.csproj" />
-    <ProjectReference Include="..\SpendingSummary.FileProcessor.ReportParser\SpendingSummary.FileProcessor.ReportParser.csproj" />
-    <ProjectReference Include="..\SpendingSummary.FileProcessor.ReportReader\SpendingSummary.FileProcessor.ReportReader.csproj" />
+    <ProjectReference Include="..\ImportedReports.Application\ImportedReports.Application.csproj" />
+    <ProjectReference Include="..\ImportedReports.Model\ImportedReports.Model.csproj" />
+    <ProjectReference Include="..\ImportedReports.Parser\ImportedReports.Parser.Interfaces\ImportedReports.Parser.Interfaces.csproj" />
+    <ProjectReference Include="..\ImportedReports.Parser\ImportedReports.Parser.ReportParser\ImportedReports.Parser.ReportParser.csproj" />
+    <ProjectReference Include="..\ImportedReports.Parser\ImportedReports.Parser.ReportReader\ImportedReports.Parser.ReportReader.csproj" />
   </ItemGroup>
 </Project>

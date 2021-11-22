@@ -6,7 +6,7 @@ services:
     container_name: 'spendingssummary.fileprocessor'
     build:
       context: .
-      dockerfile: SpendingSummary.FileProcessor/SpendingSummary.FileProcessor.WorkerService/Dockerfile
+      dockerfile: ImportedReports/ImportedReports.WorkerService/Dockerfile
     volumes:
       - "imported-files:/${ImportSettings__ReportFilesFolder}"
     depends_on:
@@ -14,17 +14,7 @@ services:
       - spendingssummary.rabbitmq
     networks:
         - queue-net
-  spendingssummary.dataaccess:
-    image: spendingssummarydataaccess
-    container_name: 'spendingssummary.dataaccess'
-    build:
-      context: .
-      dockerfile: SpendingSummary.DataStore/SpendingSummary.DataStore.WorkerService/Dockerfile    
-    depends_on:
-      - spendingssummary.db
-      - spendingssummary.rabbitmq
-    networks:
-        - queue-net
+  
   spendingssummary.db:
     image: mcr.microsoft.com/mssql/server
     container_name: 'spendingssummary.db'
@@ -37,12 +27,13 @@ services:
       - "db-data:/var/opt/mssql/" 
     networks:
         - queue-net
+
   spendingssummary.rabbitmq:
     image: spendingssummaryqueue
     container_name: 'spendingssummary.rabbitmq'
     build:
       context: .
-      dockerfile: SpendingSummary.Rabbitmq/Dockerfile
+      dockerfile: Infrastructure/Rabbitmq/Dockerfile
     ports:
         - 5672:${RaddisQueueSettings__Port}
         - 15672:15672

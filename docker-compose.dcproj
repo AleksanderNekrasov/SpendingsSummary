@@ -3,10 +3,12 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>e193ee91-a05e-42f1-ac14-60a1fd725353</ProjectGuid>
+    <ProjectGuid>dafaafa4-0655-4857-be88-069408e12941</ProjectGuid>
   </PropertyGroup>
   <ItemGroup>
-    <None Include=".env" />
+    <None Include="docker-compose.override.yml">
+      <DependentUpon>docker-compose.yml</DependentUpon>
+    </None>
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
   </ItemGroup>

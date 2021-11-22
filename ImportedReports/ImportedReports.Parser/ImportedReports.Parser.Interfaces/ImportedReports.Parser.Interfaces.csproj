@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SpendingSummary.FileProcessor.Model\SpendingSummary.FileProcessor.Model.csproj" />
+    <ProjectReference Include="..\..\ImportedReports.Model\ImportedReports.Model.csproj" />
   </ItemGroup>
 
 </Project>

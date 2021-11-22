@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ImportedReports.WorkerService": {
+      "commandName": "Project"
+    },
+    "Docker (1)": {
+      "commandName": "Docker"
+    }
+  }
+}

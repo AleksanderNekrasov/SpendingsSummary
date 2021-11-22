@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SpendingSummary.FileProcessor.Interfaces\SpendingSummary.FileProcessor.Interfaces.csproj" />
+    <ProjectReference Include="..\ImportedReports.Parser.Interfaces\ImportedReports.Parser.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>
