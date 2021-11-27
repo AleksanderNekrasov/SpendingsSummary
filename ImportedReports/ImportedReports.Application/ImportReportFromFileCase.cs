@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
 using SpendingsSummary.Interfaces;
-using SpendingsSummary.Model;
 using SpendingSummary.Common.Interfaces;
 using SpendingSummary.Common.Models;
 using System;

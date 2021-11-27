@@ -1,4 +1,4 @@
-﻿using SpendingsSummary.Model;
+﻿using SpendingSummary.Common.Models;
 using System;
 using System.Collections.Generic;
 

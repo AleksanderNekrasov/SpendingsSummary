@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SpendingSummary.Queue
+namespace SpendingSummary.Common.QueueBus
 {
     public static class EventDefinitions
     {

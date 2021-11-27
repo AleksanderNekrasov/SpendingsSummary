@@ -1,5 +1,4 @@
-﻿using SpendingsSummary.Model;
-using SpendingSummary.Common.Interfaces;
+﻿using SpendingSummary.Common.Interfaces;
 using System;
 using System.Collections.Generic;
 

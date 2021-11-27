@@ -3,12 +3,12 @@ using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client.Exceptions;
-using SpendingSummary.Queue.Interfaces;
 using System;
 using Polly;
 using System.Threading.Tasks;
+using SpendingSummary.Common.QueueBus.Interfaces;
 
-namespace SpendingSummary.Queue
+namespace SpendingSummary.Common.QueueBus
 {
     public class QueueConnection : IQueueConnection
     {
@@ -74,7 +74,7 @@ namespace SpendingSummary.Queue
             _connection.ConnectionShutdown += OnConnectionShutdown;
             _connection.CallbackException += OnCallbackException;
             _connection.ConnectionBlocked += OnConnectionBlocked;
-            return true;            
+            return true;
         }
 
         private void OnConnectionBlocked(object sender, ConnectionBlockedEventArgs e)

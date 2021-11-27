@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
 using SpendingSummary.Common.Interfaces;
-using SpendingSummary.Queue.Interfaces;
 using System.Text;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using SpendingSummary.Common.QueueBus.Interfaces;
 
-namespace SpendingSummary.Queue
+namespace SpendingSummary.Common.QueueBus
 {
     public class QueuePublisher : QueueMessageBus, IQueuePublisher
     {

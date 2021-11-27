@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SpendingsSummary.Model
+namespace SpendingSummary.Common.Models
 {
     public class TransactionModel
     {

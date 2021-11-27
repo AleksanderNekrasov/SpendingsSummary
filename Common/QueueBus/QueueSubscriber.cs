@@ -3,12 +3,12 @@ using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using SpendingSummary.Common.Interfaces;
-using SpendingSummary.Queue.Interfaces;
+using SpendingSummary.Common.QueueBus.Interfaces;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 
-namespace SpendingSummary.Queue
+namespace SpendingSummary.Common.QueueBus
 {
     public class QueueSubscriber : QueueMessageBus, IQueueSubscriber
     {

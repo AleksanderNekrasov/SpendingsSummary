@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace SpendingSummary.Queue.Interfaces
+namespace SpendingSummary.Common.QueueBus.Interfaces
 {
     public interface IQueueConnection : IDisposable
     {

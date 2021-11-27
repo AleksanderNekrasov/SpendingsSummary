@@ -1,4 +1,4 @@
-﻿namespace SpendingsSummary.Model
+﻿namespace SpendingSummary.Common.Models
 {
     public enum TransactionType
     {

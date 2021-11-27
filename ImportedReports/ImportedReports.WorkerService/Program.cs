@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SpendingsSummary.Application;
 using SpendingsSummary.WorkerService.IoC;
-using SpendingSummary.Queue;
+using SpendingSummary.Common.QueueBus;
 using static SpendingSummary.Common.EnvFile;
 
 namespace SpendingsSummary.WorkerService

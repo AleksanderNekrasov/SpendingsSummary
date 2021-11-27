@@ -1,7 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using SpendingsSummary.Interfaces;
-using SpendingsSummary.ReportParser;
 using SpendingsSummary.ReportParser.Pekao;
 using SpendingsSummary.ReportReader;
 
@@ -13,7 +11,7 @@ namespace SpendingsSummary.WorkerService.IoC
         {
             return services
                 .AddTransient<IReportLinesRepository, ReportLinesRepository>()
-                .AddTransient<ITransactionsParser, PekaoTransactionsParser>();
+                .AddTransient<ITransactionsParser, PekaoTransactionsParser>(); //TODO: feature
         }
     }
 }

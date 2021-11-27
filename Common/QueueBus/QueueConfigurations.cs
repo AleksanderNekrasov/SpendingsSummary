@@ -1,4 +1,4 @@
-﻿namespace SpendingSummary.Queue
+﻿namespace SpendingSummary.Common.QueueBus
 {
     public class QueueConfigurations
     {

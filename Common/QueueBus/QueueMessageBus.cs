@@ -2,10 +2,10 @@
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using SpendingSummary.Common.Interfaces;
-using SpendingSummary.Queue.Interfaces;
+using SpendingSummary.Common.QueueBus.Interfaces;
 using System.Threading.Tasks;
 
-namespace SpendingSummary.Queue
+namespace SpendingSummary.Common.QueueBus
 {
     public abstract class QueueMessageBus : IQueueMessageBus
     {
