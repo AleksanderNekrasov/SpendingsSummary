@@ -19,7 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\SpendingSummary.Common.csproj" />
+    <ProjectReference Include="..\..\Common\SpendingSummary.Common\SpendingSummary.Common.csproj" />
+    <ProjectReference Include="..\..\Common\SpendingSummary.QueueBus\SpendingSummary.QueueBus.csproj" />
     <ProjectReference Include="..\ImportedReports.Application\ImportedReports.Application.csproj" />
     <ProjectReference Include="..\ImportedReports.Parser\ImportedReports.Parser.ReportParser\ImportedReports.Parser.ReportParser.csproj" />
     <ProjectReference Include="..\ImportedReports.Parser\ImportedReports.Parser.ReportReader\ImportedReports.Parser.ReportReader.csproj" />

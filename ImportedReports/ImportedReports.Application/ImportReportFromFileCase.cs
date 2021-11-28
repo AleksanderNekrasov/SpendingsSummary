@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.Options;
+﻿using ImportedReports.Model;
+using Microsoft.Extensions.Options;
 using SpendingsSummary.Interfaces;
 using SpendingSummary.Common.Interfaces;
-using SpendingSummary.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -47,12 +47,12 @@ namespace SpendingsSummary.Application.Interfaces
 
         private async Task PublishTransactionAsync(IEnumerable<TransactionModel> transactions)
         {
-            await _publisher.PublishAsync(
-                new DataParsedEvent 
-                { 
-                    EventId = Guid.NewGuid(),
-                    Transactions = transactions
-                });
+            //await _publisher.PublishAsync(
+            //    new DataParsedEvent 
+            //    { 
+            //        EventId = Guid.NewGuid(),
+            //        Transactions = transactions
+            //    });
         }
     }
 }

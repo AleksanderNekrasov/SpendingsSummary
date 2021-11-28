@@ -1,5 +1,5 @@
-﻿using SpendingsSummary.Interfaces;
-using SpendingSummary.Common.Models;
+﻿using ImportedReports.Model;
+using SpendingsSummary.Interfaces;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;

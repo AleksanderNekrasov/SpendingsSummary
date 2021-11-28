@@ -1,4 +1,4 @@
-﻿namespace SpendingSummary.Common.Models
+﻿namespace ImportedReports.Model
 {
     public enum TransactionType
     {

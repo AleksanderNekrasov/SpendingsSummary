@@ -7,8 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ImportedReports", "Imported
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{67E4451F-A279-4C86-BFF3-4103596C81BD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpendingSummary.Common", "Common\SpendingSummary.Common.csproj", "{A8E02945-E111-416F-8887-D00551C1993C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{357F7862-12A3-44A9-81D5-878FAE368C38}"
 	ProjectSection(SolutionItems) = preProject
 		.env = .env
@@ -16,13 +14,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{DAFAAFA4-0655-4857-BE88-069408E12941}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{B5E4150F-E153-434C-B26D-2C6636C507F7}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rabbitmq", "Rabbitmq", "{DCFA6217-D962-46FA-86FD-4FB8BD251A3C}"
 	ProjectSection(SolutionItems) = preProject
-		Infrastructure\Rabbitmq\definitions.json = Infrastructure\Rabbitmq\definitions.json
-		Infrastructure\Rabbitmq\Dockerfile = Infrastructure\Rabbitmq\Dockerfile
-		Infrastructure\Rabbitmq\rabbitmq.conf = Infrastructure\Rabbitmq\rabbitmq.conf
+		Common\Rabbitmq\definitions.json = Common\Rabbitmq\definitions.json
+		Common\Rabbitmq\Dockerfile = Common\Rabbitmq\Dockerfile
+		Common\Rabbitmq\rabbitmq.conf = Common\Rabbitmq\rabbitmq.conf
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImportedReports.Application", "ImportedReports\ImportedReports.Application\ImportedReports.Application.csproj", "{B422B73B-936A-4196-8D49-729225126A36}"
@@ -41,16 +37,20 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImportedReports.Parser.Repo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImportedReports.WorkerService", "ImportedReports\ImportedReports.WorkerService\ImportedReports.WorkerService.csproj", "{4552DD60-93B1-4FA6-886C-87467A375F27}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FileUpload", "FileUpload", "{E8896918-5D65-4379-8D1B-BBBF06D598EF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{AF24B220-E24A-40F2-A199-4B50A8649449}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpendingSummary.Common", "Common\SpendingSummary.Common\SpendingSummary.Common.csproj", "{708E0BA6-7CC2-46B4-8A5C-55522D307EF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpendingSummary.QueueBus", "Common\SpendingSummary.QueueBus\SpendingSummary.QueueBus.csproj", "{8BB995DB-7C7E-4902-90CD-A1BF25B67DB6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A8E02945-E111-416F-8887-D00551C1993C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A8E02945-E111-416F-8887-D00551C1993C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A8E02945-E111-416F-8887-D00551C1993C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A8E02945-E111-416F-8887-D00551C1993C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DAFAAFA4-0655-4857-BE88-069408E12941}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DAFAAFA4-0655-4857-BE88-069408E12941}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAFAAFA4-0655-4857-BE88-069408E12941}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -83,13 +83,20 @@ Global
 		{4552DD60-93B1-4FA6-886C-87467A375F27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4552DD60-93B1-4FA6-886C-87467A375F27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4552DD60-93B1-4FA6-886C-87467A375F27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{708E0BA6-7CC2-46B4-8A5C-55522D307EF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{708E0BA6-7CC2-46B4-8A5C-55522D307EF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{708E0BA6-7CC2-46B4-8A5C-55522D307EF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{708E0BA6-7CC2-46B4-8A5C-55522D307EF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BB995DB-7C7E-4902-90CD-A1BF25B67DB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BB995DB-7C7E-4902-90CD-A1BF25B67DB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BB995DB-7C7E-4902-90CD-A1BF25B67DB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BB995DB-7C7E-4902-90CD-A1BF25B67DB6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{A8E02945-E111-416F-8887-D00551C1993C} = {67E4451F-A279-4C86-BFF3-4103596C81BD}
-		{DCFA6217-D962-46FA-86FD-4FB8BD251A3C} = {B5E4150F-E153-434C-B26D-2C6636C507F7}
+		{DCFA6217-D962-46FA-86FD-4FB8BD251A3C} = {67E4451F-A279-4C86-BFF3-4103596C81BD}
 		{B422B73B-936A-4196-8D49-729225126A36} = {C2AE7BE7-05A0-46CE-A22F-C1ED44AF3267}
 		{E9C0B3F5-A3DA-413A-B868-E679F3F03970} = {C2AE7BE7-05A0-46CE-A22F-C1ED44AF3267}
 		{FCEB6A60-8E47-46D0-B8CA-27B3ABE0CB8D} = {C2AE7BE7-05A0-46CE-A22F-C1ED44AF3267}
@@ -98,6 +105,9 @@ Global
 		{908B5D31-4614-4EE5-A797-E7DC7E118132} = {FCEB6A60-8E47-46D0-B8CA-27B3ABE0CB8D}
 		{4493B610-DE1B-4885-B5B3-8BCCF0CA5D59} = {FCEB6A60-8E47-46D0-B8CA-27B3ABE0CB8D}
 		{4552DD60-93B1-4FA6-886C-87467A375F27} = {C2AE7BE7-05A0-46CE-A22F-C1ED44AF3267}
+		{AF24B220-E24A-40F2-A199-4B50A8649449} = {E8896918-5D65-4379-8D1B-BBBF06D598EF}
+		{708E0BA6-7CC2-46B4-8A5C-55522D307EF4} = {67E4451F-A279-4C86-BFF3-4103596C81BD}
+		{8BB995DB-7C7E-4902-90CD-A1BF25B67DB6} = {67E4451F-A279-4C86-BFF3-4103596C81BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EA2F8E7A-41BD-479D-A4F2-733E8A1E1F0D}

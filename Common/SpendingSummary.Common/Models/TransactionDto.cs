@@ -2,7 +2,7 @@
 
 namespace SpendingSummary.Common.Models
 {
-    public class TransactionModel
+    public class TransactionDto
     {
         public DateTime BookingDate { get; set; }
 
@@ -22,6 +22,6 @@ namespace SpendingSummary.Common.Models
 
         public string ReferenceType { get; set; }
 
-        public TransactionType Type { get; set; }
+        public int Type { get; set; }
     }
 }

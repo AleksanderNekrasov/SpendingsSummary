@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SpendingSummary.Common.Interfaces;
-using SpendingSummary.Common.QueueBus;
 using SpendingSummary.Common.QueueBus.Interfaces;
 
 namespace SpendingSummary.Common.QueueBus

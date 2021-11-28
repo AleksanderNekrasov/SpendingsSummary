@@ -8,6 +8,6 @@ namespace SpendingSummary.Common.Models
     {
         public Guid EventId { get; set; }
 
-        public IEnumerable<TransactionModel> Transactions { get; set; }
+        public IEnumerable<TransactionDto> Transactions { get; set; }
     }
 }

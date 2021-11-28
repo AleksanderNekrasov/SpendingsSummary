@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\SpendingSummary.Common.csproj" />
+    <ProjectReference Include="..\..\ImportedReports.Model\ImportedReports.Model.csproj" />
   </ItemGroup>
 
 </Project>

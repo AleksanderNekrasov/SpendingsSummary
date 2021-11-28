@@ -33,7 +33,7 @@ services:
     container_name: 'spendingssummary.rabbitmq'
     build:
       context: .
-      dockerfile: Infrastructure/Rabbitmq/Dockerfile
+      dockerfile: Common/Rabbitmq/Dockerfile
     ports:
         - 5672:${RaddisQueueSettings__Port}
         - 15672:15672

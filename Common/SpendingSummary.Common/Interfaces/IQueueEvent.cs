@@ -8,6 +8,6 @@ namespace SpendingSummary.Common.Interfaces
     {
         Guid EventId { get; }
 
-        IEnumerable<TransactionModel> Transactions { get; }
+        IEnumerable<TransactionDto> Transactions { get; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using SpendingSummary.Common.Models;
+﻿using ImportedReports.Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
