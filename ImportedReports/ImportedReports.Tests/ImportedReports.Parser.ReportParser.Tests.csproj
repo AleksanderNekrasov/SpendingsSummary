@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ImportedReports.Parser.ReportReader\ImportedReports.Parser.ReportReader.csproj" />
+    <ProjectReference Include="..\ImportedReports.ReportReader\ImportedReports.ReportReader.csproj" />
   </ItemGroup>
 
 </Project>
