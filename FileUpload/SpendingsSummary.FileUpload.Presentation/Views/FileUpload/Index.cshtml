@@ -1,0 +1,45 @@
+﻿@using SpendingsSummary.FileUpload.Core.Models
+@model FilesViewModel
+@{
+    ViewData["Title"] = "Upload file";
+}
+
+<link rel="stylesheet" href="@Url.Content("../css/fileUpload.css")" />
+
+@using (Html.BeginForm(FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div>
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Select transaction file</label>
+            <input class="form-control" type="file" id="file" name="file">
+        </div>
+
+        <input class="btn btn-primary" type="submit" value="Upload" />
+    </div>
+}
+
+@if (Model?.Files is not null)
+{
+    <table class="table">
+        <tr>
+            <th scope="col">
+                <lable>Name</lable>
+            </th>
+            <th scope="col">
+                <lable>Size</lable>
+            </th>
+        </tr>
+
+        @foreach (var item in Model.Files)
+        {
+            <tr scope="row">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Size)
+                </td>
+            </tr>
+        }
+    </table>
+}
