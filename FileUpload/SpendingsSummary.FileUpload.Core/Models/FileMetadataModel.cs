@@ -1,13 +1,14 @@
 ﻿namespace SpendingsSummary.FileUpload.Core.Models;
 
-public record FileModel
+public record FileMetadataModel
 {
-    public FileModel(string name, long size)
+    public FileMetadataModel(string name, long size)
     {
         Name = name;
         Size = size;
     }
 
     public string Name { get; }
+
     public long Size { get; }
 }

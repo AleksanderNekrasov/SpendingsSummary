@@ -1,7 +1,10 @@
+using SpendingsSummary.FileUpload.Presentation.IoC;
+using MediatR;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.RegisterFileUpload();
+builder.Services.AddMvc();
 
 var app = builder.Build();
 

@@ -4,11 +4,11 @@ namespace SpendingsSummary.FileUpload.Models
 {
     public class FilesViewModel
     {
-        public FilesViewModel(IEnumerable<FileModel>? files)
+        public FilesViewModel(IEnumerable<FileMetadataModel>? files)
         {
             Files = files;
         }
 
-        public IEnumerable<FileModel>? Files { get; }
+        public IEnumerable<FileMetadataModel>? Files { get; }
     }
 }
