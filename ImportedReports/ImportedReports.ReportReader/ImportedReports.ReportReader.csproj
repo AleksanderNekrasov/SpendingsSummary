@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ImportedReports.Core\ImportedReports.Parser.Interfaces\ImportedReports.Parser.Interfaces.csproj" />
+    <ProjectReference Include="..\ImportedReports.Core\ImportedReports.Parser.ReportParser\ImportedReports.Parser.ReportParser.csproj" />
   </ItemGroup>
 
 </Project>

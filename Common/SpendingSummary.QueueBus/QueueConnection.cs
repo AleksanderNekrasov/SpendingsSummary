@@ -54,7 +54,7 @@ namespace SpendingSummary.Common.QueueBus
                 retryAttempt => TimeSpan.FromSeconds(1 + retryAttempt),
                 (exception, timespan) =>
                 {
-                    _logger.LogInformation("Broker is not reachable");
+                    _logger.LogInformation("Queue is not yet ready");
                 });
 
             await policy.ExecuteAsync(async () => await ConnectAsync());

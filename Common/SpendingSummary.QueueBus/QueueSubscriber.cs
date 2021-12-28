@@ -4,40 +4,40 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using SpendingSummary.Common.Interfaces;
 using SpendingSummary.Common.QueueBus.Interfaces;
+using SpendingSummary.QueueBus;
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace SpendingSummary.Common.QueueBus
 {
-    public class QueueSubscriber : QueueMessageBus, IQueueSubscriber
+    public class QueueSubscriber : IQueueSubscriber, IDisposable
     {
+        private readonly IQueueConnection _connection;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
         private bool _disposed;
         private IList<string> _consumeTags;
+        private readonly ConcurrentBag<IModel> _channels = new();
 
-        public QueueSubscriber(IQueueConnection persistentConnection, IServiceScopeFactory serviceScopeFactory, ILogger<QueueSubscriber> logger)
-            : base(persistentConnection, serviceScopeFactory, logger)
+        public QueueSubscriber(IQueueConnection connection, IServiceScopeFactory serviceScopeFactory, ILogger<QueueSubscriber> logger)
         {
             _consumeTags = new List<string>();
+            _connection = connection;
+            _serviceScopeFactory = serviceScopeFactory;
         }
 
-        public void Subscribe<T>() where T : IQueueEvent
+        public async Task StartSubscribingAsync<T>() where T : IQueueEvent
         {
-            StartSubscribing<T>(EventDefinitions.ByEventType[typeof(T)].queue);
-        }
+            if (_disposed) throw new ObjectDisposedException("QueueSubscriber");
 
-        public void UnsubscribeAll()
-        {
-            foreach (var tag in _consumeTags)
-            {
-                _consumerChannel.BasicCancelNoWait(tag);
-            }
-        }
-
-        private void StartSubscribing<T>(string queueName) where T : IQueueEvent
-        {
-            var consumer = new EventingBasicConsumer(_consumerChannel);
-            _consumeTags.Add(_consumerChannel.BasicConsume(queueName, false, consumer));
+            var queueChannel = await QueueChannel.CreateAsync(_connection);
+            var channel = queueChannel.GetChannel;
+            _channels.Add(channel);
+            var consumer = new EventingBasicConsumer(channel);
+            _consumeTags.Add(channel.BasicConsume(EventDefinitions.ByEventType[typeof(T)].queue, false, consumer));
             consumer.Received += MessageReceived<T>;
         }
 
@@ -66,9 +66,18 @@ namespace SpendingSummary.Common.QueueBus
 
         public void Dispose()
         {
-            UnsubscribeAll();
-            _consumerChannel.Dispose();
-            _consumerChannel = null;
+            foreach (var channel in _channels) channel.Dispose();
+            _channels.Clear();
+
+            try
+            {
+                _connection.Dispose();
+            }
+            catch
+            {
+                // ignored
+            }
+
             _disposed = true;
         }
     }

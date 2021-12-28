@@ -1,11 +1,9 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 
 namespace SpendingSummary.Common.Interfaces
 {
-    public interface IQueueSubscriber :  IQueueMessageBus, IDisposable 
+    public interface IQueueSubscriber
     {
-        void Subscribe<T>() where T : IQueueEvent;
-
-        void UnsubscribeAll();
+        Task StartSubscribingAsync<T>() where T : IQueueEvent;
     }
 }

@@ -5,22 +5,33 @@ using System.Text;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using SpendingSummary.Common.QueueBus.Interfaces;
+using MediatR;
+using SpendingSummary.QueueBus;
+using System.Threading;
 
 namespace SpendingSummary.Common.QueueBus
 {
-    public class QueuePublisher : QueueMessageBus, IQueuePublisher
+    public class QueuePublisher: IRequestHandler<PublishEventCommand>
     {
         private readonly ILogger<QueuePublisher> _logger;
+        private IQueueConnection _queueConnection;
 
-        public QueuePublisher(IQueueConnection persistentConnection, IServiceScopeFactory serviceScopeFactory, ILogger<QueuePublisher> logger)
-            : base(persistentConnection, serviceScopeFactory, logger)
+        public QueuePublisher(IQueueConnection queueConnection, ILogger<QueuePublisher> logger)
         {
+            _queueConnection = queueConnection;
             _logger = logger;
         }
 
-        public async Task PublishAsync(IQueueEvent queueEvent)
+        public async Task<Unit> Handle(PublishEventCommand request, CancellationToken cancellationToken)
         {
-            var channel = await GetOrCreateModelAsync();
+            await PublishAsync(request.Event, cancellationToken);
+            return Unit.Value;
+        }
+
+        private async Task PublishAsync(IQueueEvent queueEvent, CancellationToken cancellationToken)
+        {
+            using var queueChannel = await QueueChannel.CreateAsync(_queueConnection);
+            var channel = queueChannel.GetChannel;
             var eventyType = queueEvent.GetType();
 
             var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(queueEvent));
@@ -28,7 +39,7 @@ namespace SpendingSummary.Common.QueueBus
             var properties = channel.CreateBasicProperties();
             properties.DeliveryMode = 2;
 
-            channel.BasicPublish(EventDefinitions.ByEventType[eventyType].exchange, eventyType.Name, true, properties, body);
+            await Task.Run(() => channel.BasicPublish(EventDefinitions.ByEventType[eventyType].exchange, eventyType.Name, true, properties, body), cancellationToken);
         }
     }
 }

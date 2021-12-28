@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using SpendingsSummary.Interfaces;
+﻿using ImportedReports.Parser.ReportParser.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 using SpendingsSummary.ReportParser.Pekao;
 using SpendingsSummary.ReportReader;
 

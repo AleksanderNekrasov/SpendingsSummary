@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using SpendingsSummary.Application;
 using SpendingsSummary.WorkerService.IoC;
 using SpendingSummary.Common.QueueBus;
+using SpendingSummary.QueueBus;
 using static SpendingSummary.Common.EnvFile;
 
 namespace SpendingsSummary.WorkerService
@@ -26,7 +27,7 @@ namespace SpendingsSummary.WorkerService
                         .Configure<ImportSettings>(hostContext.Configuration.GetSection("ImportSettings"))                        
                         .RegisterDataDependancy()
                         .RegisterApplicationDependancy(hostContext.Configuration)
-                        .AddQueueConnection()
+                        .AddHostedService<QueueInitializer>()
                         .AddHostedService<ReadFromQueueService>();
                 });
     }

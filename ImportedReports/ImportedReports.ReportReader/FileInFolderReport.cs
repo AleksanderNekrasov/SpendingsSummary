@@ -1,4 +1,4 @@
-﻿using SpendingsSummary.Interfaces;
+﻿using SpendingsSummary.ReportReader.Interfaces;
 using System.IO;
 
 namespace SpendingsSummary.ReportReader
