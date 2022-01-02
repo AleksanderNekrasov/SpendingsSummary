@@ -1,10 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using SpendingSummary.Common.Interfaces;
 using SpendingSummary.Common.QueueBus.Interfaces;
 using SpendingSummary.QueueBus;
+using SpendingSummary.QueueBus.Configuration;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -14,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace SpendingSummary.Common.QueueBus
 {
-    public class QueueSubscriber : IQueueSubscriber, IDisposable
+    public class QueueSubscriber : QueueBusBase, IQueueSubscriber, IDisposable
     {
         private readonly IQueueConnection _connection;
         private readonly IServiceScopeFactory _serviceScopeFactory;
@@ -22,7 +24,8 @@ namespace SpendingSummary.Common.QueueBus
         private IList<string> _consumeTags;
         private readonly ConcurrentBag<IModel> _channels = new();
 
-        public QueueSubscriber(IQueueConnection connection, IServiceScopeFactory serviceScopeFactory, ILogger<QueueSubscriber> logger)
+        public QueueSubscriber(IQueueConnection connection, IServiceScopeFactory serviceScopeFactory, IOptions<QueueEventsDefinition> options, ILogger<QueueSubscriber> logger)
+            : base(options)
         {
             _consumeTags = new List<string>();
             _connection = connection;
@@ -37,7 +40,8 @@ namespace SpendingSummary.Common.QueueBus
             var channel = queueChannel.GetChannel;
             _channels.Add(channel);
             var consumer = new EventingBasicConsumer(channel);
-            _consumeTags.Add(channel.BasicConsume(EventDefinitions.ByEventType[typeof(T)].queue, false, consumer));
+            var ev = GetEventByType<T>();
+            _consumeTags.Add(channel.BasicConsume(ev.Queue, false, consumer));
             consumer.Received += MessageReceived<T>;
         }
 

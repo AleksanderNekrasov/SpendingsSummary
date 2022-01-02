@@ -5,9 +5,18 @@ namespace SpendingsSummary.FileUpload.Application.Handlers
 {
     public class SaveFileHandler : IRequestHandler<SaveFileCommand, (bool isValid, string validationMessage)>
     {
+        private readonly IMediator _mediator;
+
+        public SaveFileHandler(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
         public Task<(bool isValid, string validationMessage)> Handle(SaveFileCommand command, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            //var 
+            //_mediator.Send(command);
+            return null;
         }
     }
 }

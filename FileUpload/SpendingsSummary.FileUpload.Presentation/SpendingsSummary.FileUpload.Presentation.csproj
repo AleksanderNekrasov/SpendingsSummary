@@ -11,6 +11,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\..\.env" Link=".env">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\queue-events-definition.yml" Link="queue-events-definition.yml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.1.2" />
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
@@ -18,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\SpendingSummary.QueueBus\SpendingSummary.QueueBus.csproj" />
     <ProjectReference Include="..\SpendingsSummary.FileUpload.Application\SpendingsSummary.FileUpload.Application.csproj" />
     <ProjectReference Include="..\SpendingsSummary.FileUpload.Core\SpendingsSummary.FileUpload.Core.csproj" />
   </ItemGroup>

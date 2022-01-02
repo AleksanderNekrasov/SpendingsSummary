@@ -10,10 +10,12 @@ namespace SpendingSummary.Common
         public static void SetEnvironmentalVariablesFromEnvFile()
         {
             string envFilePath = ".env";
+            string fullEnvPath = Path.Combine($"{Environment.CurrentDirectory}", envFilePath);
 #if DEBUG
-            envFilePath = "bin/Debug/net5.0/.env";
+            var debugFolder = Directory.GetDirectories($"{Environment.CurrentDirectory}/bin/Debug")[0];
+            fullEnvPath = Path.Combine(debugFolder, envFilePath);
 #endif
-            Read($"{Environment.CurrentDirectory}/{envFilePath}").ToList().ForEach(x =>
+            Read(fullEnvPath).ToList().ForEach(x =>
             {
                 Environment.SetEnvironmentVariable(x.key, x.value);
             });

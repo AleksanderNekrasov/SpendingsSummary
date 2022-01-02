@@ -1,0 +1,6 @@
+Events:
+    data-parsed:
+        Name: DataParsedEvent
+        Queue: data_parsed_queue
+        Exchange: data_parsed_exchange
+        

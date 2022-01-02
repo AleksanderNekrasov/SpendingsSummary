@@ -7,6 +7,7 @@ using System;
 using Polly;
 using System.Threading.Tasks;
 using SpendingSummary.Common.QueueBus.Interfaces;
+using SpendingSummary.QueueBus.Configuration;
 
 namespace SpendingSummary.Common.QueueBus
 {

@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System.Text.Json;
+﻿using System.Text.Json;
 using SpendingSummary.Common.Interfaces;
 using System.Text;
 using Microsoft.Extensions.Logging;
@@ -8,15 +7,18 @@ using SpendingSummary.Common.QueueBus.Interfaces;
 using MediatR;
 using SpendingSummary.QueueBus;
 using System.Threading;
+using Microsoft.Extensions.Options;
+using SpendingSummary.QueueBus.Configuration;
 
 namespace SpendingSummary.Common.QueueBus
 {
-    public class QueuePublisher: IRequestHandler<PublishEventCommand>
+    public class QueuePublisher: QueueBusBase, IRequestHandler<PublishEventCommand>
     {
         private readonly ILogger<QueuePublisher> _logger;
         private IQueueConnection _queueConnection;
 
-        public QueuePublisher(IQueueConnection queueConnection, ILogger<QueuePublisher> logger)
+        public QueuePublisher(IQueueConnection queueConnection, IOptions<QueueEventsDefinition> options, ILogger<QueuePublisher> logger)
+            : base(options)
         {
             _queueConnection = queueConnection;
             _logger = logger;
@@ -32,14 +34,14 @@ namespace SpendingSummary.Common.QueueBus
         {
             using var queueChannel = await QueueChannel.CreateAsync(_queueConnection);
             var channel = queueChannel.GetChannel;
-            var eventyType = queueEvent.GetType();
+            var eventDefinition = GetEventByType(queueEvent);
 
             var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(queueEvent));
 
             var properties = channel.CreateBasicProperties();
             properties.DeliveryMode = 2;
 
-            await Task.Run(() => channel.BasicPublish(EventDefinitions.ByEventType[eventyType].exchange, eventyType.Name, true, properties, body), cancellationToken);
+            await Task.Run(() => channel.BasicPublish(eventDefinition.Exchange, eventDefinition.Name, true, properties, body), cancellationToken);
         }
     }
 }
