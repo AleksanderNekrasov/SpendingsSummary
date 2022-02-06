@@ -36,12 +36,12 @@ namespace SpendingSummary.Common.QueueBus
             var channel = queueChannel.GetChannel;
             var eventDefinition = GetEventByType(queueEvent);
 
-            var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(queueEvent));
+            var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(queueEvent, queueEvent.GetType()));
 
             var properties = channel.CreateBasicProperties();
             properties.DeliveryMode = 2;
 
-            await Task.Run(() => channel.BasicPublish(eventDefinition.Exchange, eventDefinition.Name, true, properties, body), cancellationToken);
+            channel.BasicPublish(eventDefinition.Exchange, eventDefinition.Name, true, properties, body);
         }
     }
 }

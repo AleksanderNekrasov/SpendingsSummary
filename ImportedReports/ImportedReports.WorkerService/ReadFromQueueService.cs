@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using SpendingsSummary.Application;
+using SpendingSummary.Common.Interfaces;
 using SpendingSummary.Common.Models;
 using System;
 using System.Threading;
@@ -11,27 +11,15 @@ namespace SpendingsSummary.WorkerService
     public class ReadFromQueueService : BackgroundService
     {
         private readonly ILogger<ReadFromQueueService> _logger;
-        private readonly IImportReportFromFile _importCase;
+        private readonly IQueueSubscriber _queueSubscriber;
 
-        public ReadFromQueueService(ILogger<ReadFromQueueService> logger, IImportReportFromFile importCase)
+        public ReadFromQueueService(ILogger<ReadFromQueueService> logger, IQueueSubscriber queueSubscriber)
         {
             _logger = logger;
-            _importCase = importCase;
+            _queueSubscriber = queueSubscriber;
         }
 
-        protected override async Task ExecuteAsync(CancellationToken cancellationToken)
-        {
-            //await InitializeQueuesAsync();
-            _importCase.ImportFileReportToDb(cancellationToken);
-
-            await Task.Delay(5000, cancellationToken);
-        }
-
-        private async Task InitializeQueuesAsync() 
-        {
-            //await _publisher.BindQueueAsync<DataParsedEvent>();
-            _logger.LogInformation("Queue for DataParsedEvent has been initialized: {time}", DateTimeOffset.Now);
-            return;
-        }
+        protected override async Task ExecuteAsync(CancellationToken cancellationToken) =>
+            await _queueSubscriber.StartSubscribingAsync<DataUploadedEvent>();        
     }
 }

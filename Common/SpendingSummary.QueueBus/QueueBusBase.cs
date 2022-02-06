@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using SpendingSummary.Common.Interfaces;
 using SpendingSummary.QueueBus.Configuration;
+using System;
 using System.Collections.Generic;
 
 namespace SpendingSummary.QueueBus
@@ -16,12 +17,12 @@ namespace SpendingSummary.QueueBus
 
         protected QueueEvent GetEventByType<T>(T queueEvent) where T : IQueueEvent
         {
-            return GetEventByType<T>();
+            return GetEventByType(queueEvent.GetType());
         }
 
-        protected QueueEvent GetEventByType<T>() where T : IQueueEvent
+        protected QueueEvent GetEventByType(Type eventType)
         {
-            var eventName = typeof(T).Name;
+            var eventName = eventType.Name;
             if (_events.TryGetValue(eventName, out QueueEvent ev)) return ev;
             throw new QueueEventNotConfiguredException(eventName);
         }

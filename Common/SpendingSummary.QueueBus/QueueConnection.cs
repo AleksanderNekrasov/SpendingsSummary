@@ -58,19 +58,19 @@ namespace SpendingSummary.Common.QueueBus
                     _logger.LogInformation("Queue is not yet ready");
                 });
 
-            await policy.ExecuteAsync(async () => await ConnectAsync());
-
+            await policy.ExecuteAsync(() => Connect());
             return true;
         }
 
-        private async Task<bool> ConnectAsync()
+        private async Task<bool> Connect()
         {
-            _connection = await Task.Run(() => _connectionFactory.CreateConnection());
+            //there is no async methods in ConnectionFactory
+            //and also no callback for when connection is opened
+            //thus using Task.Yield() and will think how to make it async in future
 
-            if (!IsOpen)
-            {
-                return false;
-            }
+            await Task.Yield(); 
+            _connection = _connectionFactory.CreateConnection();
+            if (!IsOpen) return false;
 
             _connection.ConnectionShutdown += OnConnectionShutdown;
             _connection.CallbackException += OnCallbackException;

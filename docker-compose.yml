@@ -43,12 +43,19 @@ services:
         - rabbit-conf:/etc/rabbitmq/
     networks:
         - queue-net
+
   spendingssummary.fileupload:
     image: ${DOCKER_REGISTRY-}spendingssummaryfileupload
     build:
       context: .
       dockerfile: FileUpload/SpendingsSummary.FileUpload.Presentation/Dockerfile
-
+    volumes:
+      - "imported-files:/app/${ImportSettings__ReportFilesFolder}"
+    depends_on:
+      - spendingssummary.db
+      - spendingssummary.rabbitmq
+    networks:
+      - queue-net
 volumes:
   db-data:
   rabbit-data:

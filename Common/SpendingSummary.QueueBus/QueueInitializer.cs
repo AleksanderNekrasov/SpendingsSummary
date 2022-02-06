@@ -37,6 +37,8 @@ namespace SpendingSummary.QueueBus
             var consumerChannel = queueChannel.GetChannel;
             foreach (var ev in _options.Events.Values)
             {
+                //this method is not called from API endpoint and will be called on application start-up only,
+                //thus there will be no scalability issues from using threads
                 await Task.Run(() => {
                     consumerChannel.ExchangeDeclare(ev.Exchange, ExchangeType.Fanout, true);
                     consumerChannel.QueueDeclare(ev.Queue, true, false, false, null);

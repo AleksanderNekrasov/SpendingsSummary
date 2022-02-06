@@ -5,7 +5,6 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using static SpendingsSummary.ReportParser.Pekao.PekaoTransactionPropertyPosition;
 using static SpendingsSummary.ReportParser.Pekao.PekaoTransactionTypeMap;
 
@@ -18,10 +17,9 @@ namespace SpendingsSummary.ReportParser.Pekao
         private static string DateFormat = "dd.MM.yyyy";
         private static CultureInfo _reportCulture = new CultureInfo("pl-PL");
 
-        public async Task<IEnumerable<TransactionModel>> ParseTransactionFromString(IEnumerable<string> transactions, CancellationToken cancellationToken)
-            => await Task.Run(() => 
-            transactions.Where(x => !string.IsNullOrEmpty(x))
-            .Select(Parse), cancellationToken);
+        public IEnumerable<TransactionModel> ParseTransactionFromString(IEnumerable<string> transactions)
+            => transactions.Where(x => !string.IsNullOrEmpty(x))
+            .Select(Parse);
 
         private static TransactionModel Parse(string transactionLine)
         {

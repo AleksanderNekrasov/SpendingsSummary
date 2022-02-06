@@ -1,3 +1,4 @@
+using SpendingsSummary.Application;
 using SpendingsSummary.FileUpload.Presentation.IoC;
 using SpendingSummary.Common.ApiCommons;
 using SpendingSummary.Common.QueueBus;
@@ -8,12 +9,17 @@ using static SpendingSummary.Common.EnvFile;
 
 SetEnvironmentalVariablesFromEnvFile();
 var builder = WebApplication.CreateBuilder(args);
-builder.Configuration.AddEventDefinitionConfigFile();
-builder.Services.Configure<QueueEventsDefinition>(builder.Configuration);
-builder.Services.RegisterFileUpload();
-builder.Services.AddMvc();
-builder.Services.AddSingleton<IQueueConnection, QueueConnection>();
-builder.Services.AddHostedService<QueueInitializer>();
+builder.Configuration
+    .AddEventDefinitionConfigFile()
+    .AddEnvironmentVariables();
+builder.Services
+    .Configure<QueueConfigurations>(builder.Configuration.GetSection("RaddisQueueSettings"))
+    .Configure<ImportSettings>(builder.Configuration.GetSection("ImportSettings"))
+    .Configure<QueueEventsDefinition>(builder.Configuration)
+    .RegisterFileUpload()
+    .AddSingleton<IQueueConnection, QueueConnection>()
+    .AddHostedService<QueueInitializer>()
+    .AddMvc();
 var app = builder.Build();
 
 app.UseHttpsRedirection();

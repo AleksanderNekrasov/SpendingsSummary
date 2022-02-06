@@ -12,6 +12,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SpendingSummary.Common.QueueBus
@@ -39,19 +40,19 @@ namespace SpendingSummary.Common.QueueBus
             var queueChannel = await QueueChannel.CreateAsync(_connection);
             var channel = queueChannel.GetChannel;
             _channels.Add(channel);
+
+            //AsyncEventingBasicConsumer does not work for unknown reason
             var consumer = new EventingBasicConsumer(channel);
-            var ev = GetEventByType<T>();
-            _consumeTags.Add(channel.BasicConsume(ev.Queue, false, consumer));
-            consumer.Received += MessageReceived<T>;
+            var ev = GetEventByType(typeof(T));
+            _consumeTags.Add(channel.BasicConsume(ev.Queue, true, consumer));
+            consumer.Received += async (o, eventArgs) =>
+            {
+                var message = Encoding.UTF8.GetString(eventArgs.Body.Span.ToArray());
+                await ProcessEvent<T>(message);
+            };
         }
 
-        private void MessageReceived<T>(object sender, BasicDeliverEventArgs eventArgs) where T : IQueueEvent
-        {
-            var message = Encoding.UTF8.GetString(eventArgs.Body.Span.ToArray());
-            ProcessEvent<T>(message);
-        }
-
-        private void ProcessEvent<T>(string message) where T : IQueueEvent
+        private async Task ProcessEvent<T>(string message) where T : IQueueEvent
         {
             using var scope = _serviceScopeFactory.CreateScope();
 
@@ -62,8 +63,7 @@ namespace SpendingSummary.Common.QueueBus
                 return;
             }
 
-            var queueEvent = DeserializeObject<T>(message);
-            handler.HandleAsync(queueEvent);
+            await handler.HandleQueueEventAsunc(DeserializeObject<T>(message));
         }
 
         private T DeserializeObject<T>(string json) => JsonSerializer.Deserialize<T>(json);

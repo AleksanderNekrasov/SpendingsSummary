@@ -1,6 +1,10 @@
 Events:
-    data-parsed:
+    DataParsedEvent:
         Name: DataParsedEvent
         Queue: data_parsed_queue
         Exchange: data_parsed_exchange
+    DataUploadedEvent:
+        Name: DataUploadedEvent
+        Queue: data_uploaded_queue
+        Exchange: data_uploaded_exchange
         

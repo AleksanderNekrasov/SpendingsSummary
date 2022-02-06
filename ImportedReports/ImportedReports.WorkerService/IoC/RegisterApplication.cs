@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SpendingsSummary.Application;
-using SpendingsSummary.Application.Interfaces;
+using SpendingSummary.Common.Interfaces;
+using SpendingSummary.Common.Models;
 
 namespace SpendingsSummary.WorkerService.IoC
 {
@@ -11,7 +12,7 @@ namespace SpendingsSummary.WorkerService.IoC
         {
             return services
                 .Configure<ImportSettings>(configuration.GetSection("ImportSettings"))
-                .AddTransient<IImportReportFromFile, ImportReportFromFileCase>();
+                .AddScoped<IQueueEventHandler<DataUploadedEvent>, DataUploadedHandler>();
         }
     }
 }

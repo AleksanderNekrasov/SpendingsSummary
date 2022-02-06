@@ -6,8 +6,5 @@ namespace SpendingSummary.Common.Interfaces
 {
     public interface IQueueEvent
     {
-        Guid EventId { get; }
-
-        IEnumerable<TransactionDto> Transactions { get; }
     }
 }
