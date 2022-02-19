@@ -22,13 +22,10 @@ namespace SpendingsSummary.Application
             _parser = parser;
         }
 
-        public async Task HandleQueueEventAsunc(DataUploadedEvent queueEvent)
+        public async Task HandleQueueEventAsync(DataUploadedEvent queueEvent)
         {
-            var tasks = GetTransactions(Path.Combine($"../{_folderPath}", queueEvent.FileName));
-            var transactions = (await Task.WhenAll(tasks))
-                .SelectMany(x => x)
-                .ToArray();
-            await PublishTransactionAsync(transactions);
+            var transactions = await GetTransactions(Path.Combine($"../{_folderPath}", queueEvent.FileName));
+            await PublishTransactionAsync(transactions.ToArray());
         }
 
         private async Task<IEnumerable<TransactionModel>> GetTransactions(string file)

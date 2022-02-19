@@ -17,8 +17,7 @@ builder.Services
     .Configure<ImportSettings>(builder.Configuration.GetSection("ImportSettings"))
     .Configure<QueueEventsDefinition>(builder.Configuration)
     .RegisterFileUpload()
-    .AddSingleton<IQueueConnection, QueueConnection>()
-    .AddHostedService<QueueInitializer>()
+    .AddQueueConnection()
     .AddMvc();
 var app = builder.Build();
 

@@ -4,32 +4,26 @@ using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using SpendingSummary.Common.Interfaces;
-using SpendingSummary.Common.QueueBus.Interfaces;
 using SpendingSummary.QueueBus;
 using SpendingSummary.QueueBus.Configuration;
+using SpendingSummary.QueueBus.Interfaces;
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace SpendingSummary.Common.QueueBus
 {
     public class QueueSubscriber : QueueBusBase, IQueueSubscriber, IDisposable
     {
-        private readonly IQueueConnection _connection;
+        private readonly IQueueChannels _channels;
         private readonly IServiceScopeFactory _serviceScopeFactory;
         private bool _disposed;
-        private IList<string> _consumeTags;
-        private readonly ConcurrentBag<IModel> _channels = new();
 
-        public QueueSubscriber(IQueueConnection connection, IServiceScopeFactory serviceScopeFactory, IOptions<QueueEventsDefinition> options, ILogger<QueueSubscriber> logger)
+        public QueueSubscriber(IQueueChannels channels, IServiceScopeFactory serviceScopeFactory, IOptions<QueueEventsDefinition> options, ILogger<QueueSubscriber> logger)
             : base(options)
         {
-            _consumeTags = new List<string>();
-            _connection = connection;
+            _channels = channels;
             _serviceScopeFactory = serviceScopeFactory;
         }
 
@@ -37,14 +31,12 @@ namespace SpendingSummary.Common.QueueBus
         {
             if (_disposed) throw new ObjectDisposedException("QueueSubscriber");
 
-            var queueChannel = await QueueChannel.CreateAsync(_connection);
-            var channel = queueChannel.GetChannel;
-            _channels.Add(channel);
+            var channel = await _channels.CreateAsync();
 
             //AsyncEventingBasicConsumer does not work for unknown reason
             var consumer = new EventingBasicConsumer(channel);
             var ev = GetEventByType(typeof(T));
-            _consumeTags.Add(channel.BasicConsume(ev.Queue, true, consumer));
+            channel.BasicConsume(ev.Queue, true, consumer);
             consumer.Received += async (o, eventArgs) =>
             {
                 var message = Encoding.UTF8.GetString(eventArgs.Body.Span.ToArray());
@@ -63,19 +55,16 @@ namespace SpendingSummary.Common.QueueBus
                 return;
             }
 
-            await handler.HandleQueueEventAsunc(DeserializeObject<T>(message));
+            await handler.HandleQueueEventAsync(DeserializeObject<T>(message));
         }
 
         private T DeserializeObject<T>(string json) => JsonSerializer.Deserialize<T>(json);
 
         public void Dispose()
         {
-            foreach (var channel in _channels) channel.Dispose();
-            _channels.Clear();
-
             try
             {
-                _connection.Dispose();
+                _channels.Dispose();
             }
             catch
             {

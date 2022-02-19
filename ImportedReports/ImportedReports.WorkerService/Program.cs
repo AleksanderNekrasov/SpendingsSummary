@@ -34,7 +34,6 @@ namespace SpendingsSummary.WorkerService
                         .RegisterDataDependancy()
                         .RegisterApplicationDependancy(hostContext.Configuration)
                         .AddQueueConnection()
-                        .AddHostedService<QueueInitializer>()
                         .AddHostedService<ReadFromQueueService>();
                 });
     }

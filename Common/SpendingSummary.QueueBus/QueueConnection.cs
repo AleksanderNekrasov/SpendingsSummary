@@ -13,7 +13,6 @@ namespace SpendingSummary.Common.QueueBus
 {
     public class QueueConnection : IQueueConnection
     {
-        private readonly object _lock = new object();
         private readonly ILogger<QueueConnection> _logger;
         private IConnection _connection;
         private bool _disposed;

@@ -2,6 +2,7 @@
 using SpendingSummary.Common.Interfaces;
 using SpendingSummary.Common.QueueBus;
 using SpendingSummary.Common.QueueBus.Interfaces;
+using SpendingSummary.QueueBus.Interfaces;
 
 namespace SpendingSummary.QueueBus
 {
@@ -9,9 +10,10 @@ namespace SpendingSummary.QueueBus
     {
         public static IServiceCollection AddQueueConnection(this IServiceCollection services)
         {
-            services.AddSingleton<IQueueConnection, QueueConnection>();
-            services.AddTransient<IQueueSubscriber, QueueSubscriber>();
-            return services;
+            return services.AddSingleton<IQueueConnection, QueueConnection>()
+                .AddSingleton<IQueueChannels, QueueChannels>()
+                .AddTransient<IQueueSubscriber, QueueSubscriber>()
+                .AddHostedService<QueueInitializer>();
         }
     }
 }

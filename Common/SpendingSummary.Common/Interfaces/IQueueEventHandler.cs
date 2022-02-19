@@ -5,6 +5,6 @@ namespace SpendingSummary.Common.Interfaces
 {
     public interface IQueueEventHandler<T> where T: IQueueEvent
     {
-        Task HandleQueueEventAsunc(T queueEvent);
+        Task HandleQueueEventAsync(T queueEvent);
     }
 }
