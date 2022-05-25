@@ -13,7 +13,7 @@ using SpendingSummary.QueueBus.Interfaces;
 
 namespace SpendingSummary.Common.QueueBus
 {
-    public class QueuePublisher: QueueBusBase, IRequestHandler<PublishEventCommand>
+    public sealed class QueuePublisher: QueueBusBase, IRequestHandler<PublishEventCommand>
     {
         private readonly IQueueChannels _channels;
         private readonly ILogger<QueuePublisher> _logger;

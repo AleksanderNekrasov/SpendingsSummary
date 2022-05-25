@@ -2,7 +2,7 @@
 
 namespace SpendingSummary.Common.Models
 {
-    public class TransactionDto
+    public sealed class TransactionDto
     {
         public DateTime BookingDate { get; set; }
 

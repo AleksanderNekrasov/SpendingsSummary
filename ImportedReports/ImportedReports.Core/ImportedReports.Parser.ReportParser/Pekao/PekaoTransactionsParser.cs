@@ -10,7 +10,7 @@ using static SpendingsSummary.ReportParser.Pekao.PekaoTransactionTypeMap;
 
 namespace SpendingsSummary.ReportParser.Pekao
 {
-    public class PekaoTransactionsParser : ITransactionsParser
+    public sealed class PekaoTransactionsParser : ITransactionsParser
     {
         //private static string RegexToSplitConfig = $"\\W{{2,}}|\\br\\\\n\\b|[,]";
         private static string SplitSeparator = ";(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";

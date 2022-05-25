@@ -33,7 +33,10 @@ namespace SpendingSummary.QueueBus
             }
 
             var createdChannel = _connection.CreateModel();
-            _channels.TryAdd(threadId, createdChannel);
+            lock (_lock) 
+            {
+                _channels.TryAdd(threadId, createdChannel); 
+            }
 
             return createdChannel;
         }

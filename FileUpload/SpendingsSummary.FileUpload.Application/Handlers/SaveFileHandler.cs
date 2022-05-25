@@ -6,7 +6,7 @@ using SpendingSummary.QueueBus;
 
 namespace SpendingsSummary.FileUpload.Application.Handlers
 {
-    public class SaveFileHandler : IRequestHandler<SaveFileCommand, (bool isValid, string validationMessage)>
+    public sealed class SaveFileHandler : IRequestHandler<SaveFileCommand, (bool isValid, string validationMessage)>
     {
         private readonly IMediator _mediator;
         private readonly IFileRepository _fileRepository;

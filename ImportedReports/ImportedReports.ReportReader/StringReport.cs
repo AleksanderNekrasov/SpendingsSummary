@@ -3,7 +3,7 @@ using System.IO;
 
 namespace SpendingsSummary.ReportReader
 {
-    public class StringReport : IReportPreParsed
+    public sealed class StringReport : IReportPreParsed
     {
         private string _textToParse;
 

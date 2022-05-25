@@ -4,7 +4,7 @@ using SpendingsSummary.FileUpload.Application.Interfaces;
 
 namespace SpendingsSummary.FileUpload.DAL
 {
-    public class FileRepository : IFileRepository
+    public sealed class FileRepository : IFileRepository
     {
         private readonly ImportSettings _importSettings;
 

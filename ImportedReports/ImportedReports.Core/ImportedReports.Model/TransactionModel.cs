@@ -2,7 +2,7 @@
 
 namespace ImportedReports.Model
 {
-    public class TransactionModel
+    public sealed class TransactionModel
     {
         public DateTime BookingDate { get; set; }
 

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace SpendingSummary.QueueBus
 {
-    public class QueueInitializer : IHostedService
+    public sealed class QueueInitializer : IHostedService
     {
         private readonly QueueEventsDefinition _options;
         private readonly IQueueChannels _channels;

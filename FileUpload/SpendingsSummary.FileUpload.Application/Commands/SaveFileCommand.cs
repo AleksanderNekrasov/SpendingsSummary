@@ -2,7 +2,7 @@
 
 namespace SpendingsSummary.FileUpload.Application.Commands;
 
-public class SaveFileCommand : IRequest<(bool isValid, string validationMessage)>
+public sealed class SaveFileCommand : IRequest<(bool isValid, string validationMessage)>
 {
     public SaveFileCommand(string name, Stream readStream)
     {
