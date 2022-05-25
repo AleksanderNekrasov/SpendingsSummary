@@ -3,7 +3,7 @@ using MediatR;
 
 namespace SpendingSummary.QueueBus
 {
-    public class PublishEventCommand : IRequest
+    public sealed class PublishEventCommand : IRequest
     {
         public PublishEventCommand(IQueueEvent eventToPublish)
         {

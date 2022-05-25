@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SpendingSummary.Common.Models
 {
-    public class DataParsedEvent : IQueueEvent
+    public sealed class DataParsedEvent : IQueueEvent
     {
         public Guid EventId { get; set; }
 

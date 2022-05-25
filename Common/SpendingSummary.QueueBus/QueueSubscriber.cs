@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace SpendingSummary.Common.QueueBus
 {
-    public class QueueSubscriber : QueueBusBase, IQueueSubscriber, IDisposable
+    public sealed class QueueSubscriber : QueueBusBase, IQueueSubscriber, IDisposable
     {
         private readonly IQueueChannels _channels;
         private readonly IServiceScopeFactory _serviceScopeFactory;

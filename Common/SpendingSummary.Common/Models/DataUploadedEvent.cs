@@ -2,7 +2,7 @@
 
 namespace SpendingSummary.Common.Models
 {
-    public class DataUploadedEvent : IQueueEvent
+    public sealed class DataUploadedEvent : IQueueEvent
     {
         public string FileName { get; set; }
     }

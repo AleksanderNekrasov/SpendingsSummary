@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SpendingsSummary.WorkerService
 {
-    public class ReadFromQueueService : BackgroundService
+    public sealed class ReadFromQueueService : BackgroundService
     {
         private readonly ILogger<ReadFromQueueService> _logger;
         private readonly IQueueSubscriber _queueSubscriber;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SpendingsSummary.ReportReader
 {
-    public class ReportLinesRepository : IReportLinesRepository
+    public sealed class ReportLinesRepository : IReportLinesRepository
     {
         private static string[] newLineSpeparators = new[] { "\r\n", "\r", "\n" };
 

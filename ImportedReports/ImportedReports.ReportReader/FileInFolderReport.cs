@@ -3,7 +3,7 @@ using System.IO;
 
 namespace SpendingsSummary.ReportReader
 {
-    internal class FileInFolderReport : IReportPreParsed
+    internal sealed class FileInFolderReport : IReportPreParsed
     {
         private string _fileName;
 

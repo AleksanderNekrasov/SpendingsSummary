@@ -11,7 +11,7 @@ using SpendingSummary.QueueBus.Configuration;
 
 namespace SpendingSummary.Common.QueueBus
 {
-    public class QueueConnection : IQueueConnection
+    public sealed class QueueConnection : IQueueConnection
     {
         private readonly ILogger<QueueConnection> _logger;
         private IConnection _connection;
