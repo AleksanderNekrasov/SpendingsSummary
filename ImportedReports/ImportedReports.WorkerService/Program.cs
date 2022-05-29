@@ -6,6 +6,7 @@ using SpendingsSummary.WorkerService.IoC;
 using SpendingSummary.Common.ApiCommons;
 using SpendingSummary.QueueBus;
 using SpendingSummary.QueueBus.Configuration;
+using SpendingSummary.Common.Models;
 using static SpendingSummary.Common.EnvFile;
 
 namespace SpendingsSummary.WorkerService
@@ -22,7 +23,7 @@ namespace SpendingsSummary.WorkerService
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration(x => x
                     .AddJsonFile("appsettings.json", true)
-                    .AddEventDefinitionConfigFile()
+                    .AddEventDefinitionConfigFile() 
                     .AddEnvironmentVariables()
                     .Build())
                 .ConfigureServices((hostContext, services) =>

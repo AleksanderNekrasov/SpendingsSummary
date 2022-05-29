@@ -11,7 +11,7 @@ public static class RegisterFileUploadDependencies
     public static IServiceCollection RegisterFileUpload(this IServiceCollection services) 
     {
         return services
-            .AddMediatR(typeof(SaveFileCommand).Assembly, typeof(PublishEventCommand).Assembly)
+            .AddMediatR(typeof(SaveFileCommand).Assembly, typeof(PublishEventToQueueCommand).Assembly)
             .AddTransient<IFileRepository,FileRepository>();
     }
 }

@@ -1,8 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using ImportedReports.Application.Mapper;
+using MediatR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SpendingsSummary.Application;
 using SpendingSummary.Common.Interfaces;
 using SpendingSummary.Common.Models;
+using SpendingSummary.QueueBus;
 
 namespace SpendingsSummary.WorkerService.IoC
 {
@@ -12,6 +15,8 @@ namespace SpendingsSummary.WorkerService.IoC
         {
             return services
                 .Configure<ImportSettings>(configuration.GetSection("ImportSettings"))
+                .AddMediatR(typeof(PublishEventToQueueCommand))
+                .AddAutoMapper(typeof(TransactionModelProfile))
                 .AddScoped<IQueueEventHandler<DataUploadedEvent>, DataUploadedHandler>();
         }
     }

@@ -20,7 +20,7 @@ namespace SpendingsSummary.FileUpload.Application.Handlers
         public async Task<(bool isValid, string validationMessage)> Handle(SaveFileCommand command, CancellationToken cancellationToken)
         {
             await _fileRepository.SaveFileAsync(command.Name, command.ReadStream);
-            await _mediator.Send(new PublishEventCommand(new DataUploadedEvent { FileName = command.Name }), cancellationToken);
+            await _mediator.Send(new PublishEventToQueueCommand(new DataUploadedEvent { FileName = command.Name }), cancellationToken);
             return (true, string.Empty);
         }
     }

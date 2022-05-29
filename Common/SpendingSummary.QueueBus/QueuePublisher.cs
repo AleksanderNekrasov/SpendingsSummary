@@ -3,7 +3,6 @@ using SpendingSummary.Common.Interfaces;
 using System.Text;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
-using SpendingSummary.Common.QueueBus.Interfaces;
 using MediatR;
 using SpendingSummary.QueueBus;
 using System.Threading;
@@ -13,7 +12,7 @@ using SpendingSummary.QueueBus.Interfaces;
 
 namespace SpendingSummary.Common.QueueBus
 {
-    public sealed class QueuePublisher: QueueBusBase, IRequestHandler<PublishEventCommand>
+    public sealed class QueuePublisher: QueueBusBase, IRequestHandler<PublishEventToQueueCommand>
     {
         private readonly IQueueChannels _channels;
         private readonly ILogger<QueuePublisher> _logger;
@@ -26,7 +25,7 @@ namespace SpendingSummary.Common.QueueBus
             _logger = logger;
         }
 
-        public async Task<Unit> Handle(PublishEventCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(PublishEventToQueueCommand request, CancellationToken cancellationToken)
         {
             await PublishAsync(request.Event, cancellationToken);
             return Unit.Value;

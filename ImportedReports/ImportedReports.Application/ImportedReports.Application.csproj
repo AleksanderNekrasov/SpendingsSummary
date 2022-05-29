@@ -5,11 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="Mediatr" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\SpendingSummary.Common\SpendingSummary.Common.csproj" />
+    <ProjectReference Include="..\..\Common\SpendingSummary.QueueBus\SpendingSummary.QueueBus.csproj" />
     <ProjectReference Include="..\ImportedReports.Core\ImportedReports.Model\ImportedReports.Model.csproj" />
     <ProjectReference Include="..\ImportedReports.Core\ImportedReports.Parser.ReportParser\ImportedReports.Parser.ReportParser.csproj" />
   </ItemGroup>

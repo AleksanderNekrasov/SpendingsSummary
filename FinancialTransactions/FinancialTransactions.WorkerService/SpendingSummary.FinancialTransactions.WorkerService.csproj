@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk.Worker">
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <UserSecretsId>dotnet-SpendingSummary.DataStore.WorkerService-768F60AD-F497-4756-B8C4-9DBAE427D888</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\SpendingSummary.Common\SpendingSummary.Common.csproj" />
     <ProjectReference Include="..\..\SpendingSummary.Common\SpendingSummary.Common.csproj" />
     <ProjectReference Include="..\..\SpendingSummary.QueueBus\SpendingSummary.Queue.csproj" />
   </ItemGroup>
