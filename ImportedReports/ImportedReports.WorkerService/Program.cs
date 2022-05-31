@@ -29,13 +29,11 @@ namespace SpendingsSummary.WorkerService
                 .ConfigureServices((hostContext, services) =>
                 {
                     services
-                        .Configure<QueueConfigurations>(hostContext.Configuration.GetSection("RaddisQueueSettings"))
                         .Configure<ImportSettings>(hostContext.Configuration.GetSection("ImportSettings"))
-                        .Configure<QueueEventsDefinition>(hostContext.Configuration)
                         .RegisterDataDependancy()
                         .RegisterApplicationDependancy(hostContext.Configuration)
-                        .AddQueueConnection()
-                        .AddHostedService<ReadFromQueueService>();
+                        .AddQueueConnection(hostContext.Configuration)
+                        .AddHostedService<QueueSubscriptionHostedService>();
                 });
     }
 }

@@ -10,7 +10,7 @@ namespace SpendingSummary.Common.ApiCommons
         {
             var path = "queue-events-definition.yml";
 #if DEBUG
-            var debugFolder = Directory.GetDirectories($"{Environment.CurrentDirectory}/bin/Debug")[0];
+            var debugFolder = $"{Environment.CurrentDirectory}/bin/Debug/net6.0";
             path = Path.Combine(debugFolder, "queue-events-definition.yml");
 #endif
             return builder.AddYamlFile(path);

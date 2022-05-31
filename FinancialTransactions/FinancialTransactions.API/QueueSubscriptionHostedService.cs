@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace SpendingSummary.DataStore.WorkerService
 {
-    public class Worker : BackgroundService
+    public class QueueSubscriptionHostedService : BackgroundService
     {
-        private readonly ILogger<Worker> _logger;
+        private readonly ILogger<QueueSubscriptionHostedService> _logger;
         private readonly IQueueSubscriber _subscriber;
 
-        public Worker(ILogger<Worker> logger, IQueueSubscriber subscriber)
+        public QueueSubscriptionHostedService(ILogger<QueueSubscriptionHostedService> logger, IQueueSubscriber subscriber)
         {
             _logger = logger;
             _subscriber = subscriber;

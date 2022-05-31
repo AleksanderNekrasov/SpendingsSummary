@@ -6,11 +6,11 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["ImportedReports/ImportedReports.WorkerService/ImportedReports.WorkerService.csproj", "ImportedReports/ImportedReports.WorkerService/"]
-COPY ["ImportedReports/ImportedReports.Parser/ImportedReports.Parser.ReportParser/ImportedReports.Parser.ReportParser.csproj", "ImportedReports/ImportedReports.Parser/ImportedReports.Parser.ReportParser/"]
-COPY ["Common/SpendingSummary.Common.csproj", "Common/"]
-COPY ["ImportedReports/ImportedReports.Model/ImportedReports.Model.csproj", "ImportedReports/ImportedReports.Model/"]
-COPY ["ImportedReports/ImportedReports.Parser/ImportedReports.Parser.Interfaces/ImportedReports.Parser.Interfaces.csproj", "ImportedReports/ImportedReports.Parser/ImportedReports.Parser.Interfaces/"]
-COPY ["ImportedReports/ImportedReports.Parser/ImportedReports.Parser.ReportReader/ImportedReports.Parser.ReportReader.csproj", "ImportedReports/ImportedReports.Parser/ImportedReports.Parser.ReportReader/"]
+COPY ["Common/SpendingSummary.Common/SpendingSummary.Common.csproj", "Common/SpendingSummary.Common/"]
+COPY ["Common/SpendingSummary.QueueBus/SpendingSummary.QueueBus.csproj", "Common/SpendingSummary.QueueBus/"]
+COPY ["ImportedReports/ImportedReports.Core/ImportedReports.Parser.ReportParser/ImportedReports.Parser.ReportParser.csproj", "ImportedReports/ImportedReports.Core/ImportedReports.Parser.ReportParser/"]
+COPY ["ImportedReports/ImportedReports.Core/ImportedReports.Model/ImportedReports.Model.csproj", "ImportedReports/ImportedReports.Core/ImportedReports.Model/"]
+COPY ["ImportedReports/ImportedReports.ReportReader/ImportedReports.ReportReader.csproj", "ImportedReports/ImportedReports.ReportReader/"]
 COPY ["ImportedReports/ImportedReports.Application/ImportedReports.Application.csproj", "ImportedReports/ImportedReports.Application/"]
 RUN dotnet restore "ImportedReports/ImportedReports.WorkerService/ImportedReports.WorkerService.csproj"
 COPY . .
@@ -23,6 +23,4 @@ RUN dotnet publish "ImportedReports.WorkerService.csproj" -c Release -o /app/pub
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-COPY [".env", "."]
-COPY ["ImportedRepots/ImportedRepots.ReportParser.Tests/TestFiles/Report1.csv", "../Files/"]
 ENTRYPOINT ["dotnet", "ImportedReports.WorkerService.dll"]

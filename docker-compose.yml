@@ -15,6 +15,25 @@ services:
     networks:
         - queue-net
   
+  spendingssummary.fileupload:
+    image: ${DOCKER_REGISTRY-}spendingssummaryfileupload
+    build:
+      context: .
+      dockerfile: FileUpload/SpendingsSummary.FileUpload.Presentation/Dockerfile
+    volumes:
+      - "imported-files:/app/${ImportSettings__ReportFilesFolder}"
+    depends_on:
+      - spendingssummary.db
+      - spendingssummary.rabbitmq
+    networks:
+      - queue-net
+
+  spendingsummary.financialtransactions.api:
+    image: ${DOCKER_REGISTRY-}spendingsummaryfinancialtransactionsapi
+    build:
+      context: .
+      dockerfile: FinancialTransactions/FinancialTransactions.API/Dockerfile
+
   spendingssummary.db:
     image: mcr.microsoft.com/mssql/server
     container_name: 'spendingssummary.db'
@@ -44,18 +63,6 @@ services:
     networks:
         - queue-net
 
-  spendingssummary.fileupload:
-    image: ${DOCKER_REGISTRY-}spendingssummaryfileupload
-    build:
-      context: .
-      dockerfile: FileUpload/SpendingsSummary.FileUpload.Presentation/Dockerfile
-    volumes:
-      - "imported-files:/app/${ImportSettings__ReportFilesFolder}"
-    depends_on:
-      - spendingssummary.db
-      - spendingssummary.rabbitmq
-    networks:
-      - queue-net
 volumes:
   db-data:
   rabbit-data:
@@ -65,4 +72,5 @@ volumes:
 networks:
   queue-net:
     driver: bridge
+
 
