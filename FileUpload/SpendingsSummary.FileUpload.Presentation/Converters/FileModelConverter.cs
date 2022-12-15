@@ -1,5 +1,4 @@
 ﻿using SpendingsSummary.FileUpload.Application.Commands;
-using SpendingsSummary.FileUpload.Core.Models;
 
 namespace SpendingsSummary.FileUpload.Presentation.Converters
 {

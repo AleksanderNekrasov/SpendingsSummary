@@ -5,8 +5,6 @@ using SpendingsSummary.Application;
 using SpendingsSummary.WorkerService.IoC;
 using SpendingSummary.Common.ApiCommons;
 using SpendingSummary.QueueBus;
-using SpendingSummary.QueueBus.Configuration;
-using SpendingSummary.Common.Models;
 using static SpendingSummary.Common.EnvFile;
 
 namespace SpendingsSummary.WorkerService

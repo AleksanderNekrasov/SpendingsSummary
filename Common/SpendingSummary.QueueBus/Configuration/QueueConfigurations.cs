@@ -1,13 +1,4 @@
 ﻿namespace SpendingSummary.QueueBus.Configuration
 {
-    public class QueueConfigurations
-    {
-        public string Host { get; set; }
-
-        public int Port { get; set; }
-
-        public string Password { get; set; }
-
-        public string Username { get; set; }
-    }
+    public sealed record QueueConfigurations (string Host, int Port, string Password, string Username);
 }

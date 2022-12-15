@@ -63,10 +63,8 @@ namespace SpendingSummary.Common.QueueBus
 
         private async Task<bool> Connect()
         {
-            //there is no async methods in ConnectionFactory
-            //and also no callback for when connection is opened
+            //there is no async CreateConnection method in ConnectionFactory of RabbitMQ.Client for .NET 6
             //thus using Task.Yield() and will think how to make it async in future
-
             await Task.Yield(); 
             _connection = _connectionFactory.CreateConnection();
             if (!IsOpen) return false;

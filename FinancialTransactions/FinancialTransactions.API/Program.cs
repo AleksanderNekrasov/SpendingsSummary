@@ -7,7 +7,6 @@ using SpendingSummary.Common.Models;
 using SpendingSummary.DataStore.WorkerService;
 using SpendingSummary.FinancialTransactions.Application;
 using SpendingSummary.QueueBus;
-using SpendingSummary.QueueBus.Configuration;
 using static SpendingSummary.Common.EnvFile;
 
 SetEnvironmentalVariablesFromEnvFile();

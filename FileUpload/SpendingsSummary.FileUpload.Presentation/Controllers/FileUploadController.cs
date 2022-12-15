@@ -6,7 +6,7 @@ using SpendingsSummary.FileUpload.Presentation.Converters;
 
 namespace SpendingsSummary.FileUpload.Controllers
 {
-    public class FileUploadController : Controller
+    public sealed class FileUploadController : Controller
     {
         private readonly IMediator _mediator;
 

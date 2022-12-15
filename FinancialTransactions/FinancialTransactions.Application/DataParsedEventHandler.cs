@@ -3,7 +3,7 @@ using SpendingSummary.Common.Models;
 
 namespace SpendingSummary.FinancialTransactions.Application
 {
-    public class DataParsedEventHandler : IQueueEventHandler<DataParsedEvent>
+    public sealed class DataParsedEventHandler : IQueueEventHandler<DataParsedEvent>
     {
         public Task HandleQueueEventAsync(DataParsedEvent queueEvent)
         {

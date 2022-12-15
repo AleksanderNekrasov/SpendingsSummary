@@ -1,7 +1,6 @@
 ﻿using RabbitMQ.Client;
 using SpendingSummary.Common.QueueBus.Interfaces;
 using SpendingSummary.QueueBus.Interfaces;
-using System;
 using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;

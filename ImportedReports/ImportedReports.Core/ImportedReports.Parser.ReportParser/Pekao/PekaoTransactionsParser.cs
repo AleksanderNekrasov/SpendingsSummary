@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
 using static SpendingsSummary.ReportParser.Pekao.PekaoTransactionPropertyPosition;
 using static SpendingsSummary.ReportParser.Pekao.PekaoTransactionTypeMap;
 

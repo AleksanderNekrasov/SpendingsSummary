@@ -1,11 +1,9 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
-using SpendingSummary.Common.QueueBus.Interfaces;
 using SpendingSummary.QueueBus.Configuration;
 using SpendingSummary.QueueBus.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 

@@ -15,7 +15,7 @@ namespace SpendingsSummary.Application
 {
     public record EmployeeModel(int Id);
 
-    public class DataUploadedHandler : IQueueEventHandler<DataUploadedEvent>
+    public sealed class DataUploadedHandler : IQueueEventHandler<DataUploadedEvent>
     {
         private string _folderPath;
         private IReportLinesRepository _reportSourceRepo;

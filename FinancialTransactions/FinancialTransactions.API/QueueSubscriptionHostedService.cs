@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SpendingSummary.DataStore.WorkerService
 {
-    public class QueueSubscriptionHostedService : BackgroundService
+    public sealed class QueueSubscriptionHostedService : BackgroundService
     {
         private readonly ILogger<QueueSubscriptionHostedService> _logger;
         private readonly IQueueSubscriber _subscriber;

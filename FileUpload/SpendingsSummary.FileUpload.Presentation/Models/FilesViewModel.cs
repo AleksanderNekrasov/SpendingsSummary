@@ -2,13 +2,5 @@
 
 namespace SpendingsSummary.FileUpload.Models
 {
-    public class FilesViewModel
-    {
-        public FilesViewModel(IEnumerable<FileMetadataModel>? files)
-        {
-            Files = files;
-        }
-
-        public IEnumerable<FileMetadataModel>? Files { get; }
-    }
+    public sealed record FilesViewModel(IEnumerable<FileMetadataModel>? Files);
 }

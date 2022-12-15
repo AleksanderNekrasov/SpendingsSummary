@@ -4,11 +4,10 @@ using SpendingSummary.Common.Models;
 
 namespace ImportedReports.Application.Mapper
 {
-    public class TransactionModelProfile : Profile
+    public sealed class TransactionModelProfile : Profile
     {
-        public TransactionModelProfile()
-        {
+        public TransactionModelProfile() =>
             CreateMap<TransactionModel, TransactionDto>();
-        }
+        
     }
 }
