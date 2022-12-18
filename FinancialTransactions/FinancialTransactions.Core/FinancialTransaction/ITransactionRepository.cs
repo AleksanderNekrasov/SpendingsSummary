@@ -1,7 +1,11 @@
-﻿namespace SpendingSummary.FinancialTransactions.Core.FinancialTransaction
+﻿using SpendingSummary.FinancialTransactions.Core.ValueObjects;
+
+namespace SpendingSummary.FinancialTransactions.Core.FinancialTransaction
 {
     public interface ITransactionRepository
     {
-        ITransactions GetTransactionsByPartyId(Guid partyId);
+        Task<ITransactions> GetTransactionsByPartyIdAsync(TransactionPartyId partyId);
+
+        Task<ITransactions> GetTransactionsByAccountIdAsync(AccountId partyId);
     }
 }

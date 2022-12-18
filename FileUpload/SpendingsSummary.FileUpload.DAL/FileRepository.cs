@@ -8,11 +8,9 @@ namespace SpendingsSummary.FileUpload.DAL
     {
         private readonly ImportSettings _importSettings;
 
-        public FileRepository(IOptions<ImportSettings> importSettings)
-        {
+        public FileRepository(IOptions<ImportSettings> importSettings) =>        
             _importSettings = importSettings.Value;
-        }
-
+        
         public async Task SaveFileAsync(string fileName, Stream stream)
         {
             string path = Path.Combine(_importSettings.ReportFilesFolder, fileName);
